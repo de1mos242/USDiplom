@@ -16,10 +16,13 @@ public:
     ~MainWindow();
 
 public slots:
-    void testSignal(QAction*);
+    void MenuAction(QAction*);
     
 private:
+    void AnalyzeAction(QAction*);
+    void FileAction(QAction*);
     Ui::MainWindow *ui;
+    void showOpenedFile(QString);
 };
 
 #endif // MAINWINDOW_H

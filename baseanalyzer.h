@@ -9,6 +9,8 @@ class BaseAnalyzer : public QObject
 public:
     explicit BaseAnalyzer(QObject *parent = 0);
     virtual void DoAnalyze();
+    virtual void showDialog();
+    virtual void printResults(QWidget *);
     
 signals:
     

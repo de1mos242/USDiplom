@@ -1,14 +1,21 @@
 #include "statisticanalyzer.h"
 #include "baseanalyzer.h"
 #include <QMessageBox>
+#include <QDialog>
+#include "statisticanalyzedialog.h"
 
 StatisticAnalyzer::StatisticAnalyzer():BaseAnalyzer()
 {
 }
 void BaseAnalyzer::DoAnalyze() {
-    QMessageBox msgBox;
-    msgBox.setInformativeText("I do statistic analyze");
-    msgBox.setWindowTitle("Analyzer say's:");
-    msgBox.exec();
+    showDialog();
 }
 
+void BaseAnalyzer::showDialog() {
+    StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
+    dialog->exec();
+}
+
+void BaseAnalyzer::printResults(QWidget * tab) {
+
+}

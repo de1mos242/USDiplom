@@ -13,12 +13,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     baseanalyzer.cpp \
-    statisticanalyzer.cpp
+    statisticanalyzer.cpp \
+    analyzerstrategy.cpp \
+    statisticanalyzedialog.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
-    statisticanalyzer.h
+    statisticanalyzer.h \
+    analyzerstrategy.h \
+    statisticanalyzedialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    statisticanalyzedialog.ui
 
 RESOURCES +=
