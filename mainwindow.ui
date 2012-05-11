@@ -68,7 +68,6 @@
      <addaction name="LinearRegressionAnalyze"/>
     </widget>
     <addaction name="StatisticAnalyze"/>
-    <addaction name="FrequencyAnalyze"/>
     <addaction name="menu_2"/>
     <addaction name="menu_3"/>
     <addaction name="ClusterAnalyze"/>
@@ -100,7 +99,7 @@
   </action>
   <action name="StatisticAnalyze">
    <property name="text">
-    <string>Статистический анализ</string>
+    <string>Описательные статистики</string>
    </property>
   </action>
   <action name="FrequencyAnalyze">
@@ -168,8 +167,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ChangeTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>638</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>MenuAction(QAction*)</slot>
+  <slot>ChangeTab(int)</slot>
  </slots>
 </ui>

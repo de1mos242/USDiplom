@@ -6,12 +6,15 @@
 #include <QFileDialog>
 #include <QTableWidget>
 #include <QLabel>
+#include "analyzerstrategy.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->menuANALIS->hide();
+    tables = new QHash <int,QTableWidget*>();
 }
 
 MainWindow::~MainWindow()
@@ -41,8 +44,30 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         return;
     }
 
-    analyzer->DoAnalyze();
-    delete analyzer;
+    QWidget *newTab = new QWidget(this);
+    QTableWidget *table = new QTableWidget(newTab);
+    table->setEditTriggers(QTableWidget::NoEditTriggers);
+    AnalyzerStrategy *strategy = new AnalyzerStrategy();
+    strategy->analyzer = analyzer;
+    strategy->sourcetable = tables->value(ui->tabWidget->currentIndex());
+    strategy->resultTable = table;
+    if (strategy->Run()) {
+        newTab->setLayout(new QGridLayout(this));
+        newTab->layout()->addWidget(table);
+        table->resizeColumnsToContents();
+        ui->tabWidget->addTab(newTab, menuAction->text());
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+    }
+    //delete analyzer;
+}
+
+void MainWindow::ChangeTab(int newIdx) {
+    if (tables->contains(newIdx)) {
+        ui->menuANALIS->show();
+    }
+    else {
+        ui->menuANALIS->hide();
+    }
 }
 
 void MainWindow::FileAction(QAction * fileAction) {
@@ -69,6 +94,7 @@ void MainWindow::showOpenedFile(QString filename) {
     QFile *file = new QFile(filename);
     file->open(QIODevice::ReadOnly|QIODevice::Text);
     QString header = file->readLine();
+    header = header.replace("\n","");
     QString separator = ";";
     QStringList headerList = header.split(separator);
     if (headerList.count() <= 1) {
@@ -81,6 +107,7 @@ void MainWindow::showOpenedFile(QString filename) {
         table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList[i]));
     for (int i=0;!file->atEnd(); i++) {
         QString line = file->readLine();
+        line = line.replace("\n","");
         QStringList lineList = line.split(separator);
         table->setRowCount(i+1);
         for (int j=0;j<columnsCount;j++) {
@@ -92,4 +119,6 @@ void MainWindow::showOpenedFile(QString filename) {
     tab->setLayout(new QGridLayout(this));
     tab->layout()->addWidget(table);
     table->resizeColumnsToContents();
+
+    tables->insert(ui->tabWidget->currentIndex(), table);
 }

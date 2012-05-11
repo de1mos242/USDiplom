@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTableWidget>
 
 namespace Ui {
 class MainWindow;
@@ -17,12 +18,15 @@ public:
 
 public slots:
     void MenuAction(QAction*);
+    void ChangeTab(int);
     
 private:
     void AnalyzeAction(QAction*);
     void FileAction(QAction*);
     Ui::MainWindow *ui;
     void showOpenedFile(QString);
+
+    QHash <int,QTableWidget *> *tables;
 };
 
 #endif // MAINWINDOW_H

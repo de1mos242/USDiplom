@@ -2,18 +2,19 @@
 #define BASEANALYZER_H
 
 #include <QObject>
+#include <QTableWidget>
 
 class BaseAnalyzer : public QObject
 {
     Q_OBJECT
 public:
     explicit BaseAnalyzer(QObject *parent = 0);
-    virtual void DoAnalyze();
-    virtual void showDialog();
-    virtual void printResults(QWidget *);
+    virtual void DoAnalyze(QTableWidget *);
+    virtual bool showDialog();
+    virtual void printResults(QTableWidget *);
     
 signals:
-    
+
 public slots:
     
 };
