@@ -6,7 +6,7 @@ BaseAnalyzer::BaseAnalyzer(QObject *parent) :
 }
 
 bool BaseAnalyzer::showDialog() {
-
+    return false;
 }
 
 void BaseAnalyzer::DoAnalyze(QTableWidget *) {
