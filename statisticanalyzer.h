@@ -9,19 +9,15 @@ class StatisticAnalyzer : public BaseAnalyzer
 {
 public:
     StatisticAnalyzer();
-    virtual void DoAnalyze(QTableWidget *);
-    virtual bool showDialog();
+    virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
 
-private:
-    QHash<QString,QString> getAllParams();
-    QList <QString> *parametersList;
+protected:
+    virtual QHash<QString,QString> getAllParams();
 
-    QList <QString> headerList;
-    int columnsCount;
-    int rowsCount;
+private:
+
     QHash<int,QHash<QString, double>* > *results;
-    QHash<int,QList<double>* > *data;
 
     void calcColumn(int);
 

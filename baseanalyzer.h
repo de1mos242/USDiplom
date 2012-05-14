@@ -9,14 +9,34 @@ class BaseAnalyzer : public QObject
     Q_OBJECT
 public:
     explicit BaseAnalyzer(QObject *parent = 0);
-    virtual void DoAnalyze(QTableWidget *);
+    QTableWidget* table;
+    QList<QWidget *> AdditionalWidgets;
+    virtual void DoAnalyze();
     virtual bool showDialog();
     virtual void printResults(QTableWidget *);
-    
+
+
 signals:
 
 public slots:
-    
+
+protected:
+    QList <QString> headerList;
+    virtual QHash<QString,QString> getAllParams();
+    QList <QString> *parametersList;
+    int columnsCount;
+    int rowsCount;
+    virtual void fillInputData();
+    QHash<int,QList<double>* > *data;
+
+    QList<QList <double> > multiMatrix(QList<QList <double> >,QList<QList <double> >);
+    QList<QList <double> > transponate(QList<QList <double> >);
+    QList<QList <double> > copyMatrix(QList<QList <double> >);
+
+
+private:
+    void fillHeaderList();
+    void fillInputTableData();
 };
 
 #endif // BASEANALYZER_H

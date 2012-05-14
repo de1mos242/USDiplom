@@ -55,5 +55,6 @@ void StatisticAnalyzeDialog::run() {
 }
 
 void StatisticAnalyzeDialog::cancel() {
+    ParametersList = new QList<QString>();
     this->close();
 }

@@ -7,13 +7,14 @@
 #include <QTableWidget>
 #include <QLabel>
 #include "analyzerstrategy.h"
+#include "componentanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->menuANALIS->hide();
+    //ui->menuANALIS->hide();
     tables = new QHash <int,QTableWidget*>();
 }
 
@@ -33,8 +34,14 @@ void MainWindow::MenuAction(QAction * menuAction) {
 
 void MainWindow::AnalyzeAction(QAction* menuAction) {
     BaseAnalyzer* analyzer;
-    if (menuAction->objectName() == "StatisticAnalyze") {
+    QString action = menuAction->objectName();
+    if (action == "StatisticAnalyze") {
         analyzer = new StatisticAnalyzer();
+    }
+    else if (action == "ComponentAnalyze") {
+        analyzer = new ComponentAnalyzer();
+        analyzer->AdditionalWidgets.append(new QWidget());
+        //analyzer->AdditionalWidgets.append(new QWidget());
     }
     else {
         QMessageBox msgBox;
@@ -44,7 +51,7 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         return;
     }
 
-    QWidget *newTab = new QWidget(this);
+    QWidget *newTab = new QWidget();
     QTableWidget *table = new QTableWidget(newTab);
     table->setEditTriggers(QTableWidget::NoEditTriggers);
     AnalyzerStrategy *strategy = new AnalyzerStrategy();
@@ -55,18 +62,23 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         newTab->setLayout(new QGridLayout(this));
         newTab->layout()->addWidget(table);
         table->resizeColumnsToContents();
-        ui->tabWidget->addTab(newTab, menuAction->text());
+        ui->tabWidget->addTab(newTab, menuAction->text() + table->objectName());
         ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+
+        foreach(QWidget* widget, analyzer->AdditionalWidgets) {
+            ui->tabWidget->addTab(widget, widget->objectName());
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+        }
     }
     //delete analyzer;
 }
 
 void MainWindow::ChangeTab(int newIdx) {
     if (tables->contains(newIdx)) {
-        ui->menuANALIS->show();
+      //  ui->menuANALIS->show();
     }
     else {
-        ui->menuANALIS->hide();
+       // ui->menuANALIS->hide();
     }
 }
 

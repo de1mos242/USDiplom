@@ -2,29 +2,14 @@
 #include "baseanalyzer.h"
 #include <QMessageBox>
 #include <QDialog>
-#include "statisticanalyzedialog.h"
 #include <qmath.h>
 
 StatisticAnalyzer::StatisticAnalyzer():BaseAnalyzer()
 {
 }
-void StatisticAnalyzer::DoAnalyze(QTableWidget * table) {
-    data = new QHash<int,QList<double>* >();
-    columnsCount = table->columnCount();
-    rowsCount = table->rowCount();
-    QList<double> *column;
-    for (int col=0;col<columnsCount;col++) {
-        column = new QList<double>();
-        for (int row=0;row<rowsCount;row++) {
-            QString cell = table->item(row, col)->text();
-            if (cell != "@")
-                column->append(cell.toDouble());
-        }
-        data->insert(col, column);
-    }
+void StatisticAnalyzer::DoAnalyze() {
+    BaseAnalyzer::DoAnalyze();
 
-    for (int i=0;i<columnsCount;i++)
-        headerList.append(table->horizontalHeaderItem(i)->text());
 
     results = new QHash<int,QHash<QString, double>* >();
     for (int i=0;i<columnsCount;i++)
@@ -214,21 +199,6 @@ QList<double>* StatisticAnalyzer::sortArray(QList<double> *source) {
         }
     }
     return newArray;
-}
-
-bool StatisticAnalyzer::showDialog() {
-    StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
-    QHashIterator<QString,QString> iterator(this->getAllParams());
-    while (iterator.hasNext()) {
-        iterator.next();
-        dialog->addAviabledParam(iterator.value(), iterator.key());
-    }
-    dialog->exec();
-    if (dialog->ParametersList->count()==0) {
-        return false;
-    }
-    parametersList = dialog->ParametersList;
-    return true;
 }
 
 void StatisticAnalyzer::printResults(QTableWidget *table) {

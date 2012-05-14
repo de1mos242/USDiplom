@@ -15,13 +15,15 @@ SOURCES += main.cpp\
     baseanalyzer.cpp \
     statisticanalyzer.cpp \
     analyzerstrategy.cpp \
-    statisticanalyzedialog.cpp
+    statisticanalyzedialog.cpp \
+    componentanalyzer.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
     statisticanalyzer.h \
     analyzerstrategy.h \
-    statisticanalyzedialog.h
+    statisticanalyzedialog.h \
+    componentanalyzer.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui
