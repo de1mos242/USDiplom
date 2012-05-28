@@ -52,10 +52,7 @@ void StatisticAnalyzer::calcColumn(int columnIdx) {
 
 double StatisticAnalyzer::calcAverage(int idx) {
     QList<double> * column = data->value(idx);
-    double sum = 0;
-    for (int i=0;i<column->count();i++)
-        sum+=column->at(i);
-    return (sum/column->count());
+    return average(*column);
 }
 
 double StatisticAnalyzer::calcMin(int idx) {
@@ -168,19 +165,13 @@ double StatisticAnalyzer::calcQuartile75(int idx) {
 }
 
 double StatisticAnalyzer::calcStandardDeviation(int idx) {
-    double variance = calcVariance(idx);
-    return sqrt(variance);
+    QList<double> * column = data->value(idx);
+    return standardDeviation(*column);
 }
 
 double StatisticAnalyzer::calcVariance(int idx) {
     QList<double> * column = data->value(idx);
-    double average = calcAverage(idx);
-    double sum = 0;
-    for (int i=0;i<column->count();i++) {
-        double temp =(column->at(i) - average);
-        sum += temp*temp;
-    }
-    return sum/column->count();
+    return variance(*column);
 }
 
 QList<double>* StatisticAnalyzer::sortArray(QList<double> *source) {

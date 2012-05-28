@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     statisticanalyzer.cpp \
     analyzerstrategy.cpp \
     statisticanalyzedialog.cpp \
-    componentanalyzer.cpp
+    componentanalyzer.cpp \
+    linearcorrelationanalyzer.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
     statisticanalyzer.h \
     analyzerstrategy.h \
     statisticanalyzedialog.h \
-    componentanalyzer.h
+    componentanalyzer.h \
+    linearcorrelationanalyzer.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

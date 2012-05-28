@@ -1,6 +1,7 @@
 #include "baseanalyzer.h"
 
 #include "statisticanalyzedialog.h"
+#include "qmath.h"
 
 BaseAnalyzer::BaseAnalyzer(QObject *parent) :
     QObject(parent)
@@ -99,4 +100,26 @@ QList<QList <double> > BaseAnalyzer::copyMatrix(QList<QList <double> > mx) {
         result.append(temp);
     }
     return result;
+}
+
+double BaseAnalyzer::average(QList<double> list) {
+    double sum = 0;
+    for (int i=0;i<list.count();i++)
+        sum+=list.at(i);
+    return (sum/list.count());
+}
+
+double BaseAnalyzer::variance(QList<double> list) {
+    double avg = average(list);
+    double sum = 0;
+    for (int i=0;i<list.count();i++) {
+        double temp =(list.at(i) - avg);
+        sum += temp*temp;
+    }
+    return sum/list.count();
+}
+
+double BaseAnalyzer::standardDeviation(QList<double> list) {
+    double vrc = variance(list);
+    return sqrt(vrc);
 }

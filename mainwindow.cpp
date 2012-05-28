@@ -8,6 +8,7 @@
 #include <QLabel>
 #include "analyzerstrategy.h"
 #include "componentanalyzer.h"
+#include "linearcorrelationanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +43,9 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         analyzer = new ComponentAnalyzer();
         analyzer->AdditionalWidgets.append(new QWidget());
         //analyzer->AdditionalWidgets.append(new QWidget());
+    }
+    else if (action == "LinearAnalyze") {
+        analyzer = new LinearCorrelationAnalyzer();
     }
     else {
         QMessageBox msgBox;
