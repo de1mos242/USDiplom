@@ -33,6 +33,8 @@ protected:
     QList<QList <double> > transponate(QList<QList <double> >);
     QList<QList <double> > copyMatrix(QList<QList <double> >);
 
+    double minElement(QList<double>);
+    double maxElement(QList<double>);
     double average(QList<double>);
     double variance(QList<double>);
     double standardDeviation(QList<double>);

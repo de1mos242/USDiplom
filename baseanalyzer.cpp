@@ -123,3 +123,19 @@ double BaseAnalyzer::standardDeviation(QList<double> list) {
     double vrc = variance(list);
     return sqrt(vrc);
 }
+
+double BaseAnalyzer::minElement(QList<double> list) {
+    double min = list.at(0);
+    for (int i=1;i<list.count();i++)
+        if (list.at(i) < min)
+            min = list.at(i);
+    return (min);
+}
+
+double BaseAnalyzer::maxElement(QList<double> list) {
+    double max = list.at(0);
+    for (int i=1;i<list.count();i++)
+        if (list.at(i) > max)
+            max = list.at(i);
+    return (max);
+}

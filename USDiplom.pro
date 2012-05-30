@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     analyzerstrategy.cpp \
     statisticanalyzedialog.cpp \
     componentanalyzer.cpp \
-    linearcorrelationanalyzer.cpp
+    linearcorrelationanalyzer.cpp \
+    spearmananalizer.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -25,7 +26,8 @@ HEADERS  += mainwindow.h \
     analyzerstrategy.h \
     statisticanalyzedialog.h \
     componentanalyzer.h \
-    linearcorrelationanalyzer.h
+    linearcorrelationanalyzer.h \
+    spearmananalizer.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

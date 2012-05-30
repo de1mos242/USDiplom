@@ -9,6 +9,7 @@
 #include "analyzerstrategy.h"
 #include "componentanalyzer.h"
 #include "linearcorrelationanalyzer.h"
+#include "spearmananalizer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -46,6 +47,9 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     }
     else if (action == "LinearAnalyze") {
         analyzer = new LinearCorrelationAnalyzer();
+    }
+    else if (action == "SpearmanAnalyze") {
+        analyzer = new SpearmanAnalizer();
     }
     else {
         QMessageBox msgBox;
