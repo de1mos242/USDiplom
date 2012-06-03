@@ -5,6 +5,7 @@
 #include <QMatrix>
 #include <qmath.h>
 #include <QGridLayout>
+#include "glwidget.h"
 
 ComponentAnalyzer::ComponentAnalyzer()
 {
@@ -128,6 +129,12 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     tab->setLayout(new QGridLayout());
     tab->layout()->addWidget(Ttable);
     Ttable->resizeColumnsToContents();
+
+    QWidget * tab2 = AdditionalWidgets.at(1);
+    tab2->setObjectName("gl");
+    GLWidget *gl = new GLWidget(tab2);
+    gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
 }
 
 void ComponentAnalyzer::fillInputData() {

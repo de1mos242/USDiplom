@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 TARGET = USDiplom
 TEMPLATE = app
@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     statisticanalyzedialog.cpp \
     componentanalyzer.cpp \
     linearcorrelationanalyzer.cpp \
-    spearmananalizer.cpp
+    spearmananalizer.cpp \
+    glwidget.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -27,9 +28,12 @@ HEADERS  += mainwindow.h \
     statisticanalyzedialog.h \
     componentanalyzer.h \
     linearcorrelationanalyzer.h \
-    spearmananalizer.h
+    spearmananalizer.h \
+    glwidget.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui
 
 RESOURCES +=
+
+LIBS += -lGLU
