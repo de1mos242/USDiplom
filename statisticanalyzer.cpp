@@ -57,20 +57,12 @@ double StatisticAnalyzer::calcAverage(int idx) {
 
 double StatisticAnalyzer::calcMin(int idx) {
     QList<double> * column = data->value(idx);
-    double min = column->at(0);
-    for (int i=1;i<column->count();i++)
-        if (column->at(i) < min)
-            min = column->at(i);
-    return (min);
+    return minElement(*column);
 }
 
 double StatisticAnalyzer::calcMax(int idx) {
     QList<double> * column = data->value(idx);
-    double max = column->at(0);
-    for (int i=1;i<column->count();i++)
-        if (column->at(i) > max)
-            max = column->at(i);
-    return (max);
+    return maxElement(*column);
 }
 
 double StatisticAnalyzer::calcAsymmetry(int idx) {

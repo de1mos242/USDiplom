@@ -2,6 +2,7 @@
 
 #include "statisticanalyzedialog.h"
 #include "qmath.h"
+#include <QGLWidget>
 
 BaseAnalyzer::BaseAnalyzer(QObject *parent) :
     QObject(parent)
@@ -34,14 +35,29 @@ void BaseAnalyzer::printResults(QTableWidget *) {
 }
 
 void BaseAnalyzer::fillInputData() {
+    QList<QList<double> > tempTable;
+    for (int row=0;row<rowsCount;row++) {
+        QList<double> tempRow;
+        tempRow.clear();
+        bool skip = false;
+        for (int col=0;col<columnsCount;col++) {
+            QString cell = table->item(row, col)->text();
+            if (cell == "@")
+                skip = true;
+            tempRow.append(cell.toDouble());
+        }
+        if (!skip)
+            tempTable.append(tempRow);
+    }
+
+    rowsCount = tempTable.size();
+
     data = new QHash<int,QList<double>* >();
     QList<double> *column;
     for (int col=0;col<columnsCount;col++) {
         column = new QList<double>();
         for (int row=0;row<rowsCount;row++) {
-            QString cell = table->item(row, col)->text();
-            if (cell != "@")
-                column->append(cell.toDouble());
+            column->append(tempTable[row][col]);
         }
         data->insert(col, column);
     }
