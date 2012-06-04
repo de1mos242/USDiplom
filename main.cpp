@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "mainwindow.h"
 #include <QTextCodec>
+#include <glwidget.h>
 
 int main(int argc, char *argv[])
 {
@@ -9,8 +10,12 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
 
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    //MainWindow w;
+    //w.show();
+    GLWidget *gl = new GLWidget();
+    //gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    //a.setMainWidget(gl);
+    gl->show();
     
     return a.exec();
 }

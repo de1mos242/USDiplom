@@ -33,6 +33,8 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
+
+
 private:
      //QtLogo *logo;
      int xRot;
