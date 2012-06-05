@@ -46,4 +46,5 @@ FORMS    += mainwindow.ui \
 
 RESOURCES +=
 
-LIBS += -lGLU
+unix:!macx:!symbian: LIBS += -lGLU
+win32: LIBS += -lglu32
