@@ -10,12 +10,10 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
 
     QApplication a(argc, argv);
-    //MainWindow w;
-    //w.show();
-    GLWidget *gl = new GLWidget();
-    //gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //a.setMainWidget(gl);
-    gl->show();
+    MainWindow w;
+    w.show();
+    //GLWidget *gl = new GLWidget();
+    //gl->show();
     
     return a.exec();
 }

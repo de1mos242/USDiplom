@@ -38,6 +38,7 @@ protected:
     double average(QList<double>);
     double variance(QList<double>);
     double standardDeviation(QList<double>);
+    double roundValue(double value);
 
 private:
     void fillHeaderList();

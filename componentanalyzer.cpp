@@ -122,9 +122,11 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
         Ttable->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
     }
 
-    for(int i=0;i<TMatrix.count();i++)
+    for(int i=0;i<TMatrix.count();i++) {
+        Ttable->setVerticalHeaderItem(i, new QTableWidgetItem(this->table->verticalHeaderItem(i)->text()));
         for(int j=0;j<parametersCount;j++)
             Ttable->setItem(i,j,new QTableWidgetItem(QString::number(TMatrix[i][j])));
+    }
 
     tab->setLayout(new QGridLayout());
     tab->layout()->addWidget(Ttable);
@@ -155,6 +157,8 @@ void ComponentAnalyzer::fillInputData() {
         else
             skipRow = false;
     }
+
+    normalize();
 }
 
 QHash<QString,QString> ComponentAnalyzer::getAllParams() {
@@ -164,4 +168,25 @@ QHash<QString,QString> ComponentAnalyzer::getAllParams() {
         result.insert(QString::number(i), headerItemText);
     }
     return result;
+}
+
+void ComponentAnalyzer::normalize() {
+    QList<QList<double> > temp;
+    for (int col=0;col<matrix[0].size();col++) {
+        QList<double> column;
+        for (int row=0;row<matrix.size();row++) {
+            column.append(matrix[row][col]);
+        }
+        temp.append(column);
+    }
+
+    for (int col=0;col<temp.size();col++) {
+        double avg = average(temp[col]);
+        double deriviation = standardDeviation(temp[col]);
+        for (int row=0;row<temp[col].size();row++) {
+            double value = (temp[col][row] - avg)/deriviation;
+            value = roundValue(fabs(value));
+            matrix[row][col] = value;
+        }
+    }
 }

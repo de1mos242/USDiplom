@@ -155,3 +155,7 @@ double BaseAnalyzer::maxElement(QList<double> list) {
             max = list.at(i);
     return (max);
 }
+
+double BaseAnalyzer::roundValue(double value) {
+    return round(1000 * value) / 1000;
+}

@@ -10,6 +10,8 @@
 #include "componentanalyzer.h"
 #include "linearcorrelationanalyzer.h"
 #include "spearmananalizer.h"
+#include <QTextStream>
+#include <QTextCodec>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -113,7 +115,11 @@ void MainWindow::showOpenedFile(QString filename) {
     table->setEditTriggers(QTableWidget::NoEditTriggers);
     QFile *file = new QFile(filename);
     file->open(QIODevice::ReadOnly|QIODevice::Text);
-    QString header = file->readLine();
+    QTextStream stream(file);
+    stream.setCodec(QTextCodec::codecForName("CP1251"));
+    //file->setEncodingFunction();
+
+    QString header = stream.readLine();
     header = header.replace("\n","");
     QString separator = ";";
     QStringList headerList = header.split(separator);
@@ -122,17 +128,18 @@ void MainWindow::showOpenedFile(QString filename) {
         headerList = header.split(separator);
     }
     int columnsCount = headerList.count();
-    table->setColumnCount(columnsCount);
-    for (int i=0;i<columnsCount;i++)
-        table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList[i]));
-    for (int i=0;!file->atEnd(); i++) {
-        QString line = file->readLine();
+    table->setColumnCount(columnsCount-1);
+    for (int i=0;i<columnsCount-1;i++)
+        table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList[i+1]));
+    for (int i=0;!stream.atEnd(); i++) {
+        QString line = stream.readLine();
         line = line.replace("\n","");
         QStringList lineList = line.split(separator);
         table->setRowCount(i+1);
-        for (int j=0;j<columnsCount;j++) {
+        table->setVerticalHeaderItem(i, new QTableWidgetItem(lineList[0]));
+        for (int j=1;j<columnsCount;j++) {
             if (j < lineList.count())
-                table->setItem(i,j,new QTableWidgetItem(lineList[j]));
+                table->setItem(i,j-1,new QTableWidgetItem(lineList[j]));
         }
     }
 
