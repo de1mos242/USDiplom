@@ -215,9 +215,10 @@ void GLWidget::drawGraphic() {
         flake.SetCurrentColor(SnowFlake3D::red);
         flake.SetGeometry(dots[i], 0.1f);
         flake.draw();
-        Figure3D::SetNewColor(Figure3D::green);
-        renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
+        //Figure3D::SetNewColor(Figure3D::green);
+        //renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
     }
+    renderText(1.0f, 1.0f,1.0f,"Test");
 }
 
 void GLWidget::drawCoords() {
