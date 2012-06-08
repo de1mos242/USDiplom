@@ -213,7 +213,7 @@ void GLWidget::drawGraphic() {
     SnowFlake3D flake;
     for (int i = 0;i<dots.size();i++) {
         flake.SetCurrentColor(SnowFlake3D::red);
-        flake.SetGeometry(dots[i], 0.1f);
+        flake.SetGeometry(dots[i], 0.04f);
         flake.draw();
         //Figure3D::SetNewColor(Figure3D::green);
         //renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
