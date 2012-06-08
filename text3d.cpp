@@ -2,11 +2,6 @@
 #include <QtGlobal>
 
 
-#ifdef Q_OS_LINUX
-#define GL_TEXT_PREFIX glx
-#elif Q_OS_WIN32
-#define GL_TEXT_PREFIX wgl
-#endif
 
 Text3D::Text3D()
 {
