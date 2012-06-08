@@ -31,6 +31,10 @@ void Figure3D::setColor(GColor color) {
     }
 }
 
+void Figure3D::SetNewColor(GColor color) {
+    setColor(color);
+}
+
 void Figure3D::draw() {
     setColor(currentColor);
 }

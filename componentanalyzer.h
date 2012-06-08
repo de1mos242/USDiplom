@@ -27,6 +27,8 @@ private:
     QList<QList<double> > TMatrix;
 
     void normalize();
+
+    QList<QList<QPair<QString, double> > > prepareGraphicData();
 };
 
 #endif // COMPONENTANALYZER_H

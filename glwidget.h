@@ -4,6 +4,7 @@
 #include <QtGui>
 #include <QGLWidget>
 #include <GL/glu.h>
+#include <QPair>
 
 class GLWidget:public QGLWidget
 {
@@ -15,6 +16,8 @@ class GLWidget:public QGLWidget
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+
+    void setCoords(QList<QList<QPair<QString,double> > > coords);
 
 public slots:
      void setXRotation(int angle);
@@ -43,6 +46,12 @@ private:
      QPoint lastPos;
      QColor qtGreen;
      QColor qtPurple;
+
+     QList<QList<QPair<QString,double> > > points;
+
+     void drawGraphic();
+
+     void drawCoords();
 };
 
 

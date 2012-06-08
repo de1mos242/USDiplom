@@ -20,9 +20,10 @@ public:
 
     virtual void draw();
     void SetCurrentColor(GColor);
+    static void SetNewColor(GColor);
 
 protected:
-    void setColor(GColor);
+    static void setColor(GColor);
 
     GColor currentColor;
 };

@@ -99,7 +99,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     int parametersCount = parametersList->count();
     table->setColumnCount(parametersCount);
     table->setRowCount(parametersCount);
-    table->setObjectName(" P Матрица");
+    table->setObjectName(tr(" P Матрица"));
     for (int i=0;i<parametersCount;i++) {
         table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
         table->setVerticalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
@@ -111,7 +111,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
 
 
     QWidget* tab = AdditionalWidgets.at(0);
-    tab->setObjectName("T Матрица");
+    tab->setObjectName(tr("T Матрица"));
     QTableWidget* Ttable = new QTableWidget();
     Ttable->setEditTriggers(QTableWidget::NoEditTriggers);
 
@@ -133,8 +133,9 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     Ttable->resizeColumnsToContents();
 
     QWidget * tab2 = AdditionalWidgets.at(1);
-    tab2->setObjectName("gl");
+    tab2->setObjectName(tr("График"));
     GLWidget *gl = new GLWidget(tab2);
+    gl->setCoords(prepareGraphicData());
     gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 }
@@ -189,4 +190,19 @@ void ComponentAnalyzer::normalize() {
             matrix[row][col] = value;
         }
     }
+}
+
+QList<QList<QPair<QString, double> > > ComponentAnalyzer::prepareGraphicData() {
+    QList<QList<QPair<QString, double> > > temp;
+    for (int col=0;col<TMatrix[0].size();col++) {
+        QList<QPair<QString, double> > column;
+        for (int row=0;row<TMatrix.size();row++) {
+            QPair<QString,double> pair;
+            pair.first = this->table->verticalHeaderItem(row)->text();
+            pair.second = TMatrix[row][col];
+            column.append(pair);
+        }
+        temp.append(column);
+    }
+    return temp;
 }

@@ -31,12 +31,12 @@ GLWidget::~GLWidget()
 
 QSize GLWidget::minimumSizeHint() const
 {
-    return QSize(50, 50);
+    return QSize(((QWidget*)parent())->width(), ((QWidget*)parent())->height());
 }
 
 QSize GLWidget::sizeHint() const
 {
-    return QSize(500, 500);
+    return QSize(((QWidget*)parent())->width(), ((QWidget*)parent())->height());
 }
 
 static void qNormalizeAngle(int &angle)
@@ -100,30 +100,10 @@ void GLWidget::paintGL()
     glRotatef(yRot,0.0f,1.0f,0.0f);
     glRotatef(zRot,0.0f,0.0f,1.0f);
 
-    GLfloat coordLength = 10.0f;
+    drawCoords();
 
-    Line3D xCoord;
-    xCoord.SetCurrentColor(Line3D::black);
-    Point3D xFrom = {-coordLength, 0.0f, 0.0f};
-    Point3D xTo = {coordLength, 0.0f, 0.0f};
-    xCoord.setPoints(xFrom, xTo);
-    xCoord.draw();
-
-    Line3D yCoord;
-    yCoord.SetCurrentColor(Line3D::red);
-    Point3D yFrom = {0.0f, -coordLength, 0.0f};
-    Point3D yTo = {0.0f, coordLength, 0.0f};
-    yCoord.setPoints(yFrom, yTo);
-    yCoord.draw();
-
-    Line3D zCoord;
-    zCoord.SetCurrentColor(Line3D::blue);
-    Point3D zFrom = {0.0f, 0.0f, -coordLength};
-    Point3D zTo = {0.0f, 0.0f, coordLength};
-    zCoord.setPoints(zFrom, zTo);
-    zCoord.draw();
-
-    Point3D p1 = {-0.5f, -0.5f, 0.0f};
+    drawGraphic();
+    /*Point3D p1 = {-0.5f, -0.5f, 0.0f};
     Point3D p2 = {-0.5f, 0.5f, 0.0f};
     Point3D p3 = {0.5f, 0.5f, 0.5f};
     Point3D p4 = {-1.0f, 1.0f, 0.5f};
@@ -165,6 +145,7 @@ void GLWidget::paintGL()
     Point3D c3 = {1.5f, 0.0f, 1.0f};
     flake.SetGeometry(c3, 0.5f);
     flake.draw();
+    */
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -207,4 +188,64 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     lastPos = event->pos();
 }
 
+void GLWidget::setCoords(QList<QList<QPair<QString, double> > > coords) {
+    this->points = coords;
+}
+
+void GLWidget::drawGraphic() {
+    bool hasY = (points.size()>1);
+    bool hasZ = (points.size()>2);
+    QList<Point3D> dots;
+    for (int i=0;i<points[0].size();i++) {
+        Point3D p;
+        p.x = points[0][i].second;
+        if (hasY)
+            p.y = points[1][i].second;
+        else
+            p.y = 0.0f;
+        if (hasZ)
+            p.z = points[2][i].second;
+        else
+            p.z = 0.0f;
+        dots.append(p);
+    }
+
+    SnowFlake3D flake;
+    for (int i = 0;i<dots.size();i++) {
+        flake.SetCurrentColor(SnowFlake3D::red);
+        flake.SetGeometry(dots[i], 0.1f);
+        flake.draw();
+        Figure3D::SetNewColor(Figure3D::green);
+        renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
+    }
+}
+
+void GLWidget::drawCoords() {
+    GLfloat coordLength = 10.0f;
+
+    Line3D xCoord;
+    xCoord.SetCurrentColor(Line3D::black);
+    Point3D xFrom = {-coordLength, 0.0f, 0.0f};
+    Point3D xTo = {coordLength, 0.0f, 0.0f};
+    xCoord.setPoints(xFrom, xTo);
+    xCoord.draw();
+
+    if (points.size()>1) {
+        Line3D yCoord;
+        yCoord.SetCurrentColor(Line3D::black);
+        Point3D yFrom = {0.0f, -coordLength, 0.0f};
+        Point3D yTo = {0.0f, coordLength, 0.0f};
+        yCoord.setPoints(yFrom, yTo);
+        yCoord.draw();
+    }
+
+    if (points.size()>2) {
+        Line3D zCoord;
+        zCoord.SetCurrentColor(Line3D::black);
+        Point3D zFrom = {0.0f, 0.0f, -coordLength};
+        Point3D zTo = {0.0f, 0.0f, coordLength};
+        zCoord.setPoints(zFrom, zTo);
+        zCoord.draw();
+    }
+}
 
