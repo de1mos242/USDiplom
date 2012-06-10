@@ -18,6 +18,7 @@ class GLWidget:public QGLWidget
     QSize sizeHint() const;
 
     void setCoords(QList<QList<QPair<QString,double> > > coords);
+    void setCoordsLabels(QList<QString> labels);
 
 public slots:
      void setXRotation(int angle);
@@ -48,6 +49,7 @@ private:
      QColor qtPurple;
 
      QList<QList<QPair<QString,double> > > points;
+     QList<QString> labels;
 
      void drawGraphic();
 

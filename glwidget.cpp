@@ -218,11 +218,11 @@ void GLWidget::drawGraphic() {
         //Figure3D::SetNewColor(Figure3D::green);
         //renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
     }
-    renderText(1.0f, 1.0f,1.0f,"Test");
+
 }
 
 void GLWidget::drawCoords() {
-    GLfloat coordLength = 10.0f;
+    GLfloat coordLength = 5.0f;
 
     Line3D xCoord;
     xCoord.SetCurrentColor(Line3D::black);
@@ -230,6 +230,8 @@ void GLWidget::drawCoords() {
     Point3D xTo = {coordLength, 0.0f, 0.0f};
     xCoord.setPoints(xFrom, xTo);
     xCoord.draw();
+    Figure3D::SetNewColor(Figure3D::green);
+    renderText(coordLength, 0.0f,0.0f,labels[0]);
 
     if (points.size()>1) {
         Line3D yCoord;
@@ -238,6 +240,8 @@ void GLWidget::drawCoords() {
         Point3D yTo = {0.0f, coordLength, 0.0f};
         yCoord.setPoints(yFrom, yTo);
         yCoord.draw();
+        Figure3D::SetNewColor(Figure3D::green);
+        renderText(0.0f,coordLength, 0.0f,labels[1]);
     }
 
     if (points.size()>2) {
@@ -247,6 +251,36 @@ void GLWidget::drawCoords() {
         Point3D zTo = {0.0f, 0.0f, coordLength};
         zCoord.setPoints(zFrom, zTo);
         zCoord.draw();
+        Figure3D::SetNewColor(Figure3D::green);
+        renderText(0.0f, 0.0f,coordLength, labels[2]);
     }
+
+    GLfloat tickSize = 0.04f;
+    SnowFlake3D tick;
+    tick.SetCurrentColor(Line3D::black);
+    for (int i=(int)-coordLength;i<coordLength;i++) {
+        Point3D tickCenter = {i, 0.0f, 0.0f};
+        tick.SetGeometry(tickCenter, tickSize);
+        tick.draw();
+        renderText(i, 0.0f,0.0f, QString::number(i));
+
+        if (points.size()>1) {
+            Point3D tickCenter = {0.0f, i, 0.0f};
+            tick.SetGeometry(tickCenter, tickSize);
+            tick.draw();
+            renderText(0.0f,i, 0.0f, QString::number(i));
+        }
+
+        if (points.size()>2) {
+            Point3D tickCenter = {0.0f, 0.0f, i};
+            tick.SetGeometry(tickCenter, tickSize);
+            tick.draw();
+            renderText(0.0f,0.0f, i, QString::number(i));
+        }
+    }
+}
+
+void GLWidget::setCoordsLabels(QList<QString> labels) {
+    this->labels = labels;
 }
 

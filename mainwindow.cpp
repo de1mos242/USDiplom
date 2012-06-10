@@ -12,6 +12,7 @@
 #include "spearmananalizer.h"
 #include <QTextStream>
 #include <QTextCodec>
+#include <QPushButton>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     //ui->menuANALIS->hide();
     tables = new QHash <int,QTableWidget*>();
+    connect(ui->openNewFileButton, SIGNAL(clicked()), this, SLOT(openNewFile()));
+    ui->tabWidget->setHidden(true);
 }
 
 MainWindow::~MainWindow()
@@ -94,14 +97,19 @@ void MainWindow::ChangeTab(int newIdx) {
 
 void MainWindow::FileAction(QAction * fileAction) {
     if (fileAction->objectName() == "OpenFile") {
-        QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"", tr("Files (*.csv)"));
-        if (fileName != "") {
-            showOpenedFile(fileName);
-        }
-
+        openNewFile();
     }
     else if (fileAction->objectName() == "Exit"){
         this->close();
+    }
+}
+
+void MainWindow::openNewFile() {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"", tr("Files (*.csv)"));
+    if (fileName != "") {
+        ui->tabWidget->setHidden(false);
+        ui->openNewFileButton->setHidden(true);
+        showOpenedFile(fileName);
     }
 }
 

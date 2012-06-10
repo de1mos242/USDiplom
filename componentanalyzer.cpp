@@ -136,6 +136,10 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     tab2->setObjectName(tr("График"));
     GLWidget *gl = new GLWidget(tab2);
     gl->setCoords(prepareGraphicData());
+    QList<QString> labels;
+    for (int i = 0; i<parametersCount; i++)
+        labels.append(headerList.at(parametersList->at(i).toInt()));
+    gl->setCoordsLabels(labels);
     gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 }

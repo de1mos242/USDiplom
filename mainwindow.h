@@ -25,8 +25,12 @@ private:
     void FileAction(QAction*);
     Ui::MainWindow *ui;
     void showOpenedFile(QString);
-
     QHash <int,QTableWidget *> *tables;
+
+private slots:
+    void openNewFile();
+
+
 };
 
 #endif // MAINWINDOW_H
