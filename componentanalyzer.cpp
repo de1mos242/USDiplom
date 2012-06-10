@@ -190,7 +190,7 @@ void ComponentAnalyzer::normalize() {
         double deriviation = standardDeviation(temp[col]);
         for (int row=0;row<temp[col].size();row++) {
             double value = (temp[col][row] - avg)/deriviation;
-            value = roundValue(fabs(value));
+            value = roundValue(value);
             matrix[row][col] = value;
         }
     }
