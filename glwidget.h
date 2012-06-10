@@ -20,6 +20,8 @@ class GLWidget:public QGLWidget
     void setCoords(QList<QList<QPair<QString,double> > > coords);
     void setCoordsLabels(QList<QString> labels);
 
+    void updateShowFlags(bool showData, bool showCoords, bool showGraphic);
+
 public slots:
      void setXRotation(int angle);
      void setYRotation(int angle);
@@ -54,6 +56,12 @@ private:
      void drawGraphic();
 
      void drawCoords();
+
+     void drawData();
+
+     bool showGraphic;
+     bool showCoords;
+     bool showData;
 };
 
 

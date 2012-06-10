@@ -13,6 +13,7 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include <QPushButton>
+#include "glwidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,8 +35,21 @@ void MainWindow::MenuAction(QAction * menuAction) {
     if (menuAction->objectName().contains("Analyze")) {
         AnalyzeAction(menuAction);
     }
-    else {
+    else if (menuAction->objectName().contains("File")){
         FileAction(menuAction);
+    }
+    else if (menuAction->objectName().contains("Graphic")) {
+        updateGraphics();
+    }
+}
+
+void MainWindow::updateGraphics() {
+    foreach (QWidget* graphicWidget, graphicWidgets) {
+        GLWidget *gl = (GLWidget*)graphicWidget->children().at(0);
+        gl->updateShowFlags(
+                    ui->menuGraphicShowData->isChecked(),
+                    ui->menuGraphicShowCoords->isChecked(),
+                    ui->menuGraphicShowGraphic->isChecked());
     }
 }
 
@@ -81,6 +95,10 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         foreach(QWidget* widget, analyzer->AdditionalWidgets) {
             ui->tabWidget->addTab(widget, widget->objectName());
             ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+            if (widget->objectName().contains(tr("График"))) {
+                graphicWidgets.append(widget);
+                updateGraphics();
+            }
         }
     }
     //delete analyzer;

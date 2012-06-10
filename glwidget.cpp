@@ -94,58 +94,18 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    glTranslatef(0.0,-1.0f,-6.0f);
+    glTranslatef(0.0,0.0f,-6.0f);
 
     glRotatef(xRot,1.0f,0.0f,0.0f);
     glRotatef(yRot,0.0f,1.0f,0.0f);
     glRotatef(zRot,0.0f,0.0f,1.0f);
 
-    drawCoords();
-
-    drawGraphic();
-    /*Point3D p1 = {-0.5f, -0.5f, 0.0f};
-    Point3D p2 = {-0.5f, 0.5f, 0.0f};
-    Point3D p3 = {0.5f, 0.5f, 0.5f};
-    Point3D p4 = {-1.0f, 1.0f, 0.5f};
-
-
-    Cylinder3D cyl;
-    cyl.SetCurrentColor(Cylinder3D::green);
-    cyl.setGeometry(p1,p2, 0.03f);
-    cyl.draw();
-    cyl.setGeometry(p2,p3, 0.03f);
-    cyl.draw();
-    cyl.setGeometry(p2,p4, 0.03f);
-    cyl.draw();
-
-    Sphere3D sp;
-    sp.SetCurrentColor(Sphere3D::red);
-    sp.SetGeometry(p1, 0.05f);
-    sp.draw();
-    sp.SetGeometry(p2, 0.05f);
-    sp.draw();
-    sp.SetGeometry(p3, 0.05f);
-    sp.draw();
-    sp.SetGeometry(p4, 0.05f);
-    sp.draw();
-
-    SnowFlake3D flake;
-
-    flake.SetCurrentColor(SnowFlake3D::red);
-    Point3D c1 = {-1.5f, 1.0f, 0.0f};
-    flake.SetGeometry(c1, 0.5f);
-    flake.draw();
-
-    flake.SetCurrentColor(SnowFlake3D::blue);
-    Point3D c2 = {0.0f, -1.0f, -1.0f};
-    flake.SetGeometry(c2, 0.3f);
-    flake.draw();
-
-    flake.SetCurrentColor(SnowFlake3D::green);
-    Point3D c3 = {1.5f, 0.0f, 1.0f};
-    flake.SetGeometry(c3, 0.5f);
-    flake.draw();
-    */
+    if (showData)
+        drawData();
+    if (showCoords)
+        drawCoords();
+    if (showGraphic)
+        drawGraphic();
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -192,7 +152,7 @@ void GLWidget::setCoords(QList<QList<QPair<QString, double> > > coords) {
     this->points = coords;
 }
 
-void GLWidget::drawGraphic() {
+void GLWidget::drawData() {
     bool hasY = (points.size()>1);
     bool hasZ = (points.size()>2);
     QList<Point3D> dots;
@@ -218,6 +178,10 @@ void GLWidget::drawGraphic() {
         //Figure3D::SetNewColor(Figure3D::green);
         //renderText(dots[i].x, dots[i].y,dots[i].z, points[0][i].first);
     }
+
+}
+
+void GLWidget::drawGraphic() {
 
 }
 
@@ -282,5 +246,12 @@ void GLWidget::drawCoords() {
 
 void GLWidget::setCoordsLabels(QList<QString> labels) {
     this->labels = labels;
+}
+
+void GLWidget::updateShowFlags(bool showData, bool showCoords, bool showGraphic) {
+    this->showCoords = showCoords;
+    this->showData = showData;
+    this->showGraphic = showGraphic;
+    updateGL();
 }
 

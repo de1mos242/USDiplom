@@ -84,8 +84,17 @@
     <addaction name="ComponentAnalyze"/>
     <addaction name="ElasticMapAnalyze"/>
    </widget>
+   <widget class="QMenu" name="menuGraphic">
+    <property name="title">
+     <string>График</string>
+    </property>
+    <addaction name="menuGraphicShowData"/>
+    <addaction name="menuGraphicShowCoords"/>
+    <addaction name="menuGraphicShowGraphic"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuANALIS"/>
+   <addaction name="menuGraphic"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="enabled">
@@ -155,6 +164,39 @@
   <action name="LinearRegressionAnalyze">
    <property name="text">
     <string>Линейная регрессия</string>
+   </property>
+  </action>
+  <action name="menuGraphicShowData">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Отображать данные</string>
+   </property>
+  </action>
+  <action name="menuGraphicShowCoords">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Отображать оси</string>
+   </property>
+  </action>
+  <action name="menuGraphicShowGraphic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Отображать график</string>
    </property>
   </action>
  </widget>

@@ -26,6 +26,8 @@ private:
     Ui::MainWindow *ui;
     void showOpenedFile(QString);
     QHash <int,QTableWidget *> *tables;
+    void updateGraphics();
+    QList<QWidget*> graphicWidgets;
 
 private slots:
     void openNewFile();
