@@ -10,6 +10,8 @@ Vector::Vector()
 
 Vector Vector::normalize() {
     Vector nv;
+    if (x == 0.0f && y == 0.0f && z == 0.0f)
+        return nv;
     double curLen = length();
     nv.x = x/curLen;
     nv.y = y/curLen;
@@ -30,6 +32,8 @@ Vector Vector::Create(Point3D from, Point3D to) {
 }
 
 Point3D Vector::movePoint(Point3D from, double length) {
+    if (x == 0.0f && y == 0.0f && z == 0.0f)
+        return from;
     Vector normal = normalize();
     normal.x*= length;
     normal.y*= length;
