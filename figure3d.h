@@ -7,6 +7,14 @@ struct Point3D {
     GLfloat x;
     GLfloat y;
     GLfloat z;
+
+    QList<double> getCoodList() {
+        QList<double> res;
+        res.append(x);
+        res.append(y);
+        res.append(z);
+        return res;
+    }
 };
 
 class Figure3D

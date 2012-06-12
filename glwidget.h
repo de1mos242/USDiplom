@@ -5,6 +5,7 @@
 #include <QGLWidget>
 #include <GL/glu.h>
 #include <QPair>
+#include "graphnode.h"
 
 class GLWidget:public QGLWidget
 {
@@ -19,6 +20,7 @@ class GLWidget:public QGLWidget
 
     void setCoords(QList<QList<QPair<QString,double> > > coords);
     void setCoordsLabels(QList<QString> labels);
+    void setGrahp(GraphNode* node);
 
     void updateShowFlags(bool showData, bool showCoords, bool showGraphic);
 
@@ -62,6 +64,11 @@ private:
      bool showGraphic;
      bool showCoords;
      bool showData;
+
+     GraphNode* rootNode;
+
+     void drawGraphNode(GraphNode* node);
+     void drawChildNode(GraphNode* node, GraphNode* parent);
 };
 
 

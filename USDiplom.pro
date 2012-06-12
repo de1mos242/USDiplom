@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     snowflake3d.cpp \
     cylinder3d.cpp \
     sphere3d.cpp \
-    text3d.cpp
+    text3d.cpp \
+    graphnode.cpp \
+    vector.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -41,7 +43,9 @@ HEADERS  += mainwindow.h \
     snowflake3d.h \
     cylinder3d.h \
     sphere3d.h \
-    text3d.h
+    text3d.h \
+    graphnode.h \
+    vector.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

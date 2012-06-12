@@ -182,7 +182,52 @@ void GLWidget::drawData() {
 }
 
 void GLWidget::drawGraphic() {
+    drawGraphNode(rootNode);
+}
 
+void GLWidget::drawGraphNode(GraphNode* node) {
+    Sphere3D sphere;
+    sphere.SetCurrentColor(Cylinder3D::yellow);
+    Point3D p;
+    p.x = node->coords[0];
+    if (node->coords.size() > 1)
+        p.y = node->coords[1];
+    else
+        p.y = 0.0f;
+    if (node->coords.size() > 2)
+        p.z = node->coords[2];
+    else
+        p.z = 0.0f;
+
+    sphere.SetGeometry(p, 0.05f);
+    sphere.draw();
+
+
+
+    foreach(GraphNode* child, node->nodes) {
+        drawChildNode(child, node);
+    }
+}
+
+void GLWidget::drawChildNode(GraphNode* node, GraphNode* parent) {
+    /*Point3D p = {node->coords[0], 0.0f, 0.0f};
+    if (node->coords.size() > 1)
+        p.y = node->coords[1];
+    if (node->coords.size() > 2)
+        p.z = node->coords[2];
+
+    Point3D pp = {parent->coords[0], 0.0f, 0.0f};
+    if (parent->coords.size() > 1)
+        pp.y = parent->coords[1];
+    if (parent->coords.size() > 3)
+        pp.z = parent->coords[2];
+
+    Cylinder3D cyl;
+    cyl.SetCurrentColor(Cylinder3D::red);
+    cyl.setGeometry(pp, p, 0.04f);
+    cyl.draw();*/
+
+    drawGraphNode(node);
 }
 
 void GLWidget::drawCoords() {
@@ -246,6 +291,10 @@ void GLWidget::drawCoords() {
 
 void GLWidget::setCoordsLabels(QList<QString> labels) {
     this->labels = labels;
+}
+
+void GLWidget::setGrahp(GraphNode *node) {
+    this->rootNode = node;
 }
 
 void GLWidget::updateShowFlags(bool showData, bool showCoords, bool showGraphic) {
