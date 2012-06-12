@@ -328,7 +328,7 @@ QList<QList<QList<double> > > ComponentAnalyzer::getSectors(QList<QList<double> 
         result.append(xMyL);
         result.append(xMyM);
     }
-    else if (cloud.size() == 3) {
+    else if (cloud.size() > 2) {
         QList<QList<double> > xLyLzL;
         QList<QList<double> > xMyLzL;
         QList<QList<double> > xLyMzL;
