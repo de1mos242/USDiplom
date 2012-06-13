@@ -23,6 +23,8 @@ GLWidget::GLWidget(QWidget *parent)
 
     qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
     qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
+
+    graphNodeSetted = false;
 }
 
 GLWidget::~GLWidget()
@@ -104,7 +106,7 @@ void GLWidget::paintGL()
         drawData();
     if (showCoords)
         drawCoords();
-    if (showGraphic)
+    if (showGraphic && graphNodeSetted)
         drawGraphic();
 }
 
@@ -295,6 +297,7 @@ void GLWidget::setCoordsLabels(QList<QString> labels) {
 
 void GLWidget::setGrahp(GraphNode *node) {
     this->rootNode = node;
+    graphNodeSetted = true;
 }
 
 void GLWidget::updateShowFlags(bool showData, bool showCoords, bool showGraphic) {

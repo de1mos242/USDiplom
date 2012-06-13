@@ -13,6 +13,7 @@ public:
     ComponentAnalyzer();
     virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
+    bool ShowGraph;
 
 protected:
     virtual QHash<QString,QString> getAllParams();

@@ -62,27 +62,11 @@
     <property name="title">
      <string>ANALIS</string>
     </property>
-    <widget class="QMenu" name="menu_2">
-     <property name="title">
-      <string>Корреляционный анализ</string>
-     </property>
-     <addaction name="LinearAnalyze"/>
-     <addaction name="SpearmanAnalyze"/>
-     <addaction name="KendellAnalyze"/>
-    </widget>
-    <widget class="QMenu" name="menu_3">
-     <property name="title">
-      <string>Регрессионный анализ</string>
-     </property>
-     <addaction name="PairRegressionAnalyze"/>
-     <addaction name="LinearRegressionAnalyze"/>
-    </widget>
     <addaction name="StatisticAnalyze"/>
-    <addaction name="menu_2"/>
-    <addaction name="menu_3"/>
     <addaction name="ClusterAnalyze"/>
     <addaction name="ComponentAnalyze"/>
     <addaction name="ElasticMapAnalyze"/>
+    <addaction name="TopologicAnalyze"/>
    </widget>
    <widget class="QMenu" name="menuGraphic">
     <property name="title">
@@ -107,8 +91,14 @@
    </property>
   </action>
   <action name="SaveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Сохранить как...</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="Exit">
@@ -120,6 +110,9 @@
    <property name="text">
     <string>Описательные статистики</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="FrequencyAnalyze">
    <property name="text">
@@ -129,6 +122,9 @@
   <action name="ClusterAnalyze">
    <property name="text">
     <string>Кластерный анализ(K-means)</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="ComponentAnalyze">
@@ -140,15 +136,24 @@
    <property name="text">
     <string>Упругие карты</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="LinearAnalyze">
    <property name="text">
     <string>Линейный</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="SpearmanAnalyze">
    <property name="text">
     <string>Спирмена</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="KendellAnalyze">
@@ -197,6 +202,11 @@
    </property>
    <property name="text">
     <string>Отображать график</string>
+   </property>
+  </action>
+  <action name="TopologicAnalyze">
+   <property name="text">
+    <string>Метод топологических грамматик</string>
    </property>
   </action>
  </widget>

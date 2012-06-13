@@ -13,6 +13,7 @@ ComponentAnalyzer::ComponentAnalyzer()
 {
     e1 = 0.5;
     e2 = 0.4;
+    ShowGraph = false;
 }
 
 void ComponentAnalyzer::DoAnalyze() {
@@ -99,42 +100,24 @@ void ComponentAnalyzer::DoAnalyze() {
 
 void ComponentAnalyzer::printResults(QTableWidget * table) {
     int parametersCount = parametersList->count();
+    table->setObjectName(tr("T Матрица"));
+    table->setEditTriggers(QTableWidget::NoEditTriggers);
+
     table->setColumnCount(parametersCount);
-    table->setRowCount(parametersCount);
-    table->setObjectName(tr(" P Матрица"));
+    table->setRowCount(TMatrix.count());
+
     for (int i=0;i<parametersCount;i++) {
         table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
-        table->setVerticalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
-    }
-
-    for(int i=0;i<parametersCount;i++)
-        for(int j=0;j<parametersCount;j++)
-            table->setItem(i,j,new QTableWidgetItem(QString::number(PMatrix[i][j])));
-
-
-    QWidget* tab = AdditionalWidgets.at(0);
-    tab->setObjectName(tr("T Матрица"));
-    QTableWidget* Ttable = new QTableWidget();
-    Ttable->setEditTriggers(QTableWidget::NoEditTriggers);
-
-    Ttable->setColumnCount(parametersCount);
-    Ttable->setRowCount(TMatrix.count());
-
-    for (int i=0;i<parametersCount;i++) {
-        Ttable->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
     }
 
     for(int i=0;i<TMatrix.count();i++) {
-        Ttable->setVerticalHeaderItem(i, new QTableWidgetItem(this->table->verticalHeaderItem(i)->text()));
+        table->setVerticalHeaderItem(i, new QTableWidgetItem(this->table->verticalHeaderItem(i)->text()));
         for(int j=0;j<parametersCount;j++)
-            Ttable->setItem(i,j,new QTableWidgetItem(QString::number(TMatrix[i][j])));
+            table->setItem(i,j,new QTableWidgetItem(QString::number(TMatrix[i][j])));
     }
 
-    tab->setLayout(new QGridLayout());
-    tab->layout()->addWidget(Ttable);
-    Ttable->resizeColumnsToContents();
 
-    QWidget * tab2 = AdditionalWidgets.at(1);
+    QWidget * tab2 = AdditionalWidgets.at(0);
     tab2->setObjectName(tr("График"));
     GLWidget *gl = new GLWidget(tab2);
     gl->setCoords(prepareGraphicData());
@@ -142,7 +125,8 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     for (int i = 0; i<parametersCount; i++)
         labels.append(headerList.at(parametersList->at(i).toInt()));
     gl->setCoordsLabels(labels);
-    gl->setGrahp(prepareGraphData());
+    if (this->ShowGraph)
+        gl->setGrahp(prepareGraphData());
     gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 }

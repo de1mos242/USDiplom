@@ -65,6 +65,8 @@ private:
      bool showCoords;
      bool showData;
 
+     bool graphNodeSetted;
+
      GraphNode* rootNode;
 
      void drawGraphNode(GraphNode* node);

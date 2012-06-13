@@ -62,13 +62,17 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     else if (action == "ComponentAnalyze") {
         analyzer = new ComponentAnalyzer();
         analyzer->AdditionalWidgets.append(new QWidget());
-        analyzer->AdditionalWidgets.append(new QWidget());
     }
     else if (action == "LinearAnalyze") {
         analyzer = new LinearCorrelationAnalyzer();
     }
     else if (action == "SpearmanAnalyze") {
         analyzer = new SpearmanAnalizer();
+    }
+    else if (action == "TopologicAnalyze") {
+        analyzer = new ComponentAnalyzer();
+        analyzer->AdditionalWidgets.append(new QWidget());
+        ((ComponentAnalyzer*)analyzer)->ShowGraph = true;
     }
     else {
         QMessageBox msgBox;
@@ -89,7 +93,12 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         newTab->setLayout(new QGridLayout(this));
         newTab->layout()->addWidget(table);
         table->resizeColumnsToContents();
-        ui->tabWidget->addTab(newTab, menuAction->text() + table->objectName());
+        if (table->objectName() != "") {
+            ui->tabWidget->addTab(newTab, menuAction->text());
+        }
+        else {
+            ui->tabWidget->addTab(newTab, table->objectName());
+        }
         ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 
         foreach(QWidget* widget, analyzer->AdditionalWidgets) {
