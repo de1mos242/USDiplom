@@ -127,6 +127,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
             Ttable->setItem(i,j,new QTableWidgetItem(QString::number(TMatrix[i][j])));
 
     tab->setLayout(new QGridLayout());
+    Ttable->setObjectName("ttable");
     tab->layout()->addWidget(Ttable);
     Ttable->resizeColumnsToContents();
 

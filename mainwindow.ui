@@ -23,6 +23,9 @@
       <property name="currentIndex">
        <number>-1</number>
       </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -183,9 +186,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>tabCloseRequested(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>OnCloseTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>263</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>MenuAction(QAction*)</slot>
   <slot>ChangeTab(int)</slot>
+  <slot>OnCloseTab(int)</slot>
  </slots>
 </ui>

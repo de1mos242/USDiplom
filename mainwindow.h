@@ -19,6 +19,7 @@ public:
 public slots:
     void MenuAction(QAction*);
     void ChangeTab(int);
+    void OnCloseTab(int tab);
     
 private:
     void AnalyzeAction(QAction*);
@@ -27,7 +28,7 @@ private:
     void showOpenedFile(QString);
     void saveOpenedTab();
 
-    QHash <int,QTableWidget *> *tables;
+    QList <QTableWidget *> *tables;
 };
 
 #endif // MAINWINDOW_H

@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     //ui->menuANALIS->hide();
-    tables = new QHash <int,QTableWidget*>();
+    tables = new QList <QTableWidget*>();
 }
 
 MainWindow::~MainWindow()
@@ -65,7 +65,7 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     table->setEditTriggers(QTableWidget::NoEditTriggers);
     AnalyzerStrategy *strategy = new AnalyzerStrategy();
     strategy->analyzer = analyzer;
-    strategy->sourcetable = tables->value(ui->tabWidget->currentIndex());
+    strategy->sourcetable = tables->at(ui->tabWidget->currentIndex());
     strategy->resultTable = table;
     if (strategy->Run()) {
         newTab->setLayout(new QGridLayout(this));
@@ -73,17 +73,27 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         table->resizeColumnsToContents();
         ui->tabWidget->addTab(newTab, menuAction->text() + table->objectName());
         ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+        tables->append(table);
 
         foreach(QWidget* widget, analyzer->AdditionalWidgets) {
             ui->tabWidget->addTab(widget, widget->objectName());
             ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+            QTableWidget *findTable = 0;
+            for (int x=0;x<widget->layout()->count();x++) {
+                QLayoutItem* w = widget->layout()->itemAt(x);
+                QString n = w->widget()->objectName();
+                if (n == "ttable")
+                    findTable = (QTableWidget*)w->widget();
+            }
+            tables->append(findTable);
         }
+
     }
     //delete analyzer;
 }
 
 void MainWindow::ChangeTab(int newIdx) {
-    if (tables->contains(newIdx)) {
+    if (tables->size() > newIdx) {
       //  ui->menuANALIS->show();
     }
     else {
@@ -144,13 +154,15 @@ void MainWindow::showOpenedFile(QString filename) {
     tab->layout()->addWidget(table);
     table->resizeColumnsToContents();
 
-    tables->insert(ui->tabWidget->currentIndex(), table);
+    tables->append(table);
 }
 
 void MainWindow::saveOpenedTab() {
     if (ui->tabWidget->currentIndex() == -1)
         return;
-    QTableWidget* openedTab = tables->value(ui->tabWidget->currentIndex());
+    if (tables->at(ui->tabWidget->currentIndex()) == 0)
+        return;
+    QTableWidget* openedTab = tables->at(ui->tabWidget->currentIndex());
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save file"), "", tr("Files (*.csv)"));
     if (fileName == "")
@@ -171,10 +183,17 @@ void MainWindow::saveOpenedTab() {
         for (int col = 0;col < openedTab->columnCount();col++) {
             if (col!=0)
                 file->write(nodeSep);
-            file->write(openedTab->itemAt(row, col)->text().toUtf8());
+            QString data = openedTab->item(row, col)->text();
+            QByteArray dataBytes = data.toUtf8();
+            file->write(dataBytes);
         }
         file->write(lineSep);
     }
     file->flush();
     file->close();
+}
+
+void MainWindow::OnCloseTab(int tab) {
+    tables->removeAt(tab);
+    ui->tabWidget->removeTab(tab);
 }
