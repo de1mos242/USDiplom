@@ -47,7 +47,7 @@ void StatisticAnalyzeDialog::run() {
     }
     if (ParametersList->count() == 0) {
         QMessageBox *msg = new QMessageBox(this);
-        msg->setText("Выберите параметры");
+        msg->setText(tr("Выберите параметры"));
         msg->exec();
         return;
     }
