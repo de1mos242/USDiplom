@@ -237,24 +237,22 @@ double ComponentAnalyzer::getCloudCenterByCoord(double one, double two) {
 GraphNode* ComponentAnalyzer::prepareGraphData() {
     getITmatrix();
 
-
-    graphNodePoints.append(getPointInCloud(iTMatrix));
-
     GraphNode* temp = new GraphNode();
     QList<QList<double> > workSector = iTMatrix;
 
-    for (int i=0;i<5;i++) {
-        workSector = getMaxCloudFromSectors(getSectors(workSector));
-        graphNodePoints.append(getPointInCloud(workSector));
+    getCellPoints(workSector, 10);
+    convertCould(iTMatrix);
+
+    for(int i=0;i<50;i++) {
+        shiftPoints();
+        mergePoints();
     }
 
+    normalizeRaduises();
     GraphNode *pNode = temp;
     for(int i=0;i<graphNodePoints.size();i++) {
-        Point3D point = graphNodePoints[i];
-        pNode->coords.append(point.x);
-        pNode->coords.append(point.y);
-        pNode->coords.append(point.z);
-
+        pNode->coords = graphNodePoints[i].first;
+        pNode->radius = graphNodePoints[i].second;
         if (i < graphNodePoints.size()-1) {
             GraphNode *cNode = new GraphNode();
             pNode->nodes.append(cNode);
@@ -262,107 +260,81 @@ GraphNode* ComponentAnalyzer::prepareGraphData() {
         }
     }
 
+
     return temp;
 }
 
-QList<QList<QList<double> > > ComponentAnalyzer::getSectors(QList<QList<double> > cloud) {
+QList<QList<QList<double> > > ComponentAnalyzer::getSectors(QList<QList<double> > cloud, int divide) {
     QList<QList<QList<double> > > result;
 
-    Point3D center = getCloudCenter(cloud);
+    double xMin = minElement(cloud[0]);
+    double xMax = maxElement(cloud[0]);
+    double dx = (xMax - xMin)/divide;
+    double yMin, yMax, zMin, zMax, dy, dz;
+    if (cloud.size() > 1) {
+        yMin = minElement(cloud[1]);
+        yMax = maxElement(cloud[1]);
+        dy = (yMax - yMin)/divide;
+    }
+    if (cloud.size() > 2) {
+        zMin = minElement(cloud[2]);
+        zMax = maxElement(cloud[2]);
+        dz = (zMax - zMin)/divide;
+    }
 
     if (cloud.size() == 1) {
-        QList<QList<double> > xL;
-        QList<QList<double> > xM;
-        for (int i = 0; i< cloud[0].size();i++) {
-            QList<double> line;
-            for (int j=0;j<cloud.size();j++)
-                line.append(cloud[j][i]);
-            if (cloud[0][i] <= center.x)
-                xL.append(line);
-            else
-                xM.append(line);
+        for (int i=0;i<divide;i++) {
+            QList<QList<double> > temp;
+            for(int row=0;row<cloud[0].size();row++) {
+                if (cloud[0][row] >= xMin + i*dx && cloud[0][row] <= xMin + (i+1)*dx) {
+                    QList<double> line;
+                    line.append(cloud[0][row]);
+                    temp.append(line);
+                }
+
+            }
+            result.append(temp);
         }
-        result.append(xL);
-        result.append(xM);
     }
     else if (cloud.size() == 2) {
-        QList<QList<double> > xLyL;
-        QList<QList<double> > xMyL;
-        QList<QList<double> > xLyM;
-        QList<QList<double> > xMyM;
-        for (int i = 0; i< cloud[0].size();i++) {
-            QList<double> line;
-            for (int j=0;j<cloud.size();j++)
-                line.append(cloud[j][i]);
-            if (cloud[0][i] <= center.x) {
-                if (cloud[1][i] <= center.y)
-                    xLyL.append(line);
-                else
-                    xLyM.append(line);
+        for (int ix=0;ix<divide;ix++)
+            for (int iy=0;iy<divide;iy++) {
+                QList<QList<double> > temp;
+                for(int row=0;row<cloud[0].size();row++)
+                    if (cloud[0][row] >= xMin + ix*dx
+                            && cloud[0][row] <= xMin + (ix+1)*dx
+                            && cloud[1][row] >= yMin + iy*dy
+                            && cloud[1][row] <= yMin + (iy+1)*dy) {
+                        QList<double> line;
+                        line.append(cloud[0][row]);
+                        line.append(cloud[1][row]);
+                        temp.append(line);
+                    }
+                result.append(temp);
             }
-            else {
-                if (cloud[1][i] <= center.y)
-                    xMyL.append(line);
-                else
-                    xMyM.append(line);
-            }
-        }
-        result.append(xLyL);
-        result.append(xLyM);
-        result.append(xMyL);
-        result.append(xMyM);
     }
     else if (cloud.size() > 2) {
-        QList<QList<double> > xLyLzL;
-        QList<QList<double> > xMyLzL;
-        QList<QList<double> > xLyMzL;
-        QList<QList<double> > xMyMzL;
-        QList<QList<double> > xLyLzM;
-        QList<QList<double> > xMyLzM;
-        QList<QList<double> > xLyMzM;
-        QList<QList<double> > xMyMzM;
-        for (int i = 0; i< cloud[0].size();i++) {
-            QList<double> line;
-            for (int j=0;j<cloud.size();j++)
-                line.append(cloud[j][i]);
-            if (cloud[0][i] <= center.x) {
-                if (cloud[1][i] <= center.y) {
-                    if (cloud[2][i] <= center.z)
-                        xLyLzL.append(line);
-                    else
-                        xLyLzM.append(line);
+        for (int ix=0;ix<divide;ix++)
+            for (int iy=0;iy<divide;iy++)
+                for (int iz=0;iz<divide;iz++) {
+                    QList<QList<double> > temp;
+                    for(int row=0;row<cloud[0].size();row++)
+                        if (cloud[0][row] >= xMin + ix*dx
+                                && cloud[0][row] <= xMin + (ix+1)*dx
+                                && cloud[1][row] >= yMin + iy*dy
+                                && cloud[1][row] <= yMin + (iy+1)*dy
+                                && cloud[2][row] >= zMin * iz*dz
+                                && cloud[2][row] <= zMin + (iz+1)*dz) {
+                            QList<double> line;
+                            line.append(cloud[0][row]);
+                            line.append(cloud[1][row]);
+                            line.append(cloud[2][row]);
+                            temp.append(line);
+                        }
+                    result.append(temp);
                 }
-                else {
-                    if (cloud[2][i] <= center.z)
-                        xLyMzL.append(line);
-                    else
-                        xLyMzM.append(line);
-                }
-            }
-            else {
-                if (cloud[1][i] <= center.y) {
-                    if (cloud[2][i] <= center.z)
-                        xMyLzL.append(line);
-                    else
-                        xMyLzM.append(line);
-                }
-                else {
-                    if (cloud[2][i] <= center.z)
-                        xMyMzL.append(line);
-                    else
-                        xMyMzM.append(line);
-                }
-            }
-        }
-        result.append(xLyLzL);
-        result.append(xLyMzL);
-        result.append(xMyLzL);
-        result.append(xMyMzL);
-        result.append(xLyLzM);
-        result.append(xLyMzM);
-        result.append(xMyLzM);
-        result.append(xMyMzM);
     }
+
 
     return result;
 }
@@ -418,7 +390,7 @@ Point3D ComponentAnalyzer::getPointInCloud(QList<QList<double> > cloud) {
     double step = sumVector.length()/vectors.size();
 
     for(int i=0;i<graphNodePoints.size();i++) {
-        graphNodePoints[i] = sumVector.movePoint(graphNodePoints[i], step);
+        graphNodePoints[i].first = sumVector.movePoint(graphNodePoints[i].first, step);
     }
 
     return sumVector.movePoint(center, step);
@@ -446,4 +418,145 @@ QList<QList<double> > ComponentAnalyzer::getMaxCloudFromSectors(QList<QList<QLis
     }
 
     return result;
+}
+
+void ComponentAnalyzer::getCellPoints(QList<QList<double> > cloud, int divide) {
+
+    double xMin = minElement(cloud[0]);
+    double xMax = maxElement(cloud[0]);
+    double dx = (xMax - xMin)/divide;
+    double yMin = 0, yMax = 0, zMin = 0, zMax = 0, dy = 0, dz = 0;
+    if (cloud.size() > 1) {
+        yMin = minElement(cloud[1]);
+        yMax = maxElement(cloud[1]);
+        dy = (yMax - yMin)/divide;
+    }
+    if (cloud.size() > 2) {
+        zMin = minElement(cloud[2]);
+        zMax = maxElement(cloud[2]);
+        dz = (zMax - zMin)/divide;
+    }
+    double radius = (dx/2 + dy/2 + dz/2)/3;
+
+    if (cloud.size() == 1) {
+        for (int ix=0;ix<divide;ix++) {
+            double xc = ((xMin + ix*dx)+(xMin + (ix+1)*dx))/2;
+            Point3D temp = {xc,0.0f,0.0f};
+            graphNodePoints.append(QPair<Point3D,double>(temp, radius));
+        }
+    }
+    else if (cloud.size() == 2) {
+        for (int ix=0;ix<divide;ix++) {
+            double xc = ((xMin + ix*dx)+(xMin + (ix+1)*dx))/2;
+            for (int iy=0;iy<divide;iy++) {
+
+                double yc = ((yMin + iy*dy)+(yMin + (iy+1)*dy))/2;
+                Point3D temp = {xc,yc,0.0f};
+                graphNodePoints.append(QPair<Point3D,double>(temp, radius));
+            }
+        }
+    }
+    else if (cloud.size() > 2) {
+        for (int ix=0;ix<divide;ix++) {
+            double xc = ((xMin + ix*dx)+(xMin + (ix+1)*dx))/2;
+            for (int iy=0;iy<divide;iy++) {
+                double yc = ((yMin + iy*dy)+(yMin + (iy+1)*dy))/2;
+                for (int iz=0;iz<divide;iz++) {
+                    double zc = ((zMin + iz*dz)+(zMin + (iz+1)*dz))/2;
+                    Point3D temp = {xc,yc,zc};
+                    graphNodePoints.append(QPair<Point3D,double>(temp, radius));
+                }
+            }
+        }
+    }
+}
+
+void ComponentAnalyzer::shiftPoints() {
+    for (int idx=0;idx<graphNodePoints.size();idx++) {
+        double distance = graphNodePoints[idx].second;
+        Point3D point = graphNodePoints[idx].first;
+
+        QList<Point3D> workPoints;
+        foreach(Point3D cloudNode, cloud) {
+            double dx = (point.x-cloudNode.x)*(point.x-cloudNode.x);
+            double dy = (point.y-cloudNode.y)*(point.y-cloudNode.y);
+            double dz = (point.z-cloudNode.z)*(point.z-cloudNode.z);
+
+            if (sqrt(dx+dy+dz) <= distance)
+                workPoints.append(cloudNode);
+        }
+
+        if (workPoints.size() == 0) {
+            graphNodePoints.removeAt(idx);
+            idx--;
+            continue;
+        }
+
+        QList<Vector> vectors;
+        foreach(Point3D workPoint, workPoints)
+            vectors.append(Vector::Create(point, workPoint));
+
+        Vector sumVector = Vector::Create(point, point);
+        for (int i=0;i<vectors.size();i++)
+            sumVector = sumVector.sum(vectors[i]);
+
+        double step = sumVector.length()/vectors.size();
+
+        graphNodePoints[idx].first = sumVector.movePoint(point, step);
+    }
+}
+
+void ComponentAnalyzer::mergePoints() {
+    for (int i = 0; i < graphNodePoints.size();i++) {
+        for (int j=i+1;j < graphNodePoints.size();j++) {
+            Point3D p1 = graphNodePoints[i].first;
+            Point3D p2 = graphNodePoints[j].first;
+            double r1 = graphNodePoints[i].second;
+            double r2 = graphNodePoints[j].second;
+            double dx = (p1.x-p2.x)*(p1.x-p2.x);
+            double dy = (p1.y-p2.y)*(p1.y-p2.y);
+            double dz = (p1.z-p2.z)*(p1.z-p2.z);
+
+            if (sqrt(dx+dy+dz) >= (r1 + r2)/10)
+                continue;
+
+            double cx = (p1.x + p2.x)/2;
+            double cy = (p1.y + p2.y)/2;
+            double cz = (p1.z + p2.z)/2;
+            Point3D resultPoint = {cx, cy, cz};
+            double newRadius = r1 + r2;
+            graphNodePoints.removeAt(j);
+            j--;
+            graphNodePoints[i].first = resultPoint;
+            graphNodePoints[i].second = newRadius;
+        }
+    }
+}
+
+void ComponentAnalyzer::convertCould(QList<QList<double> > cloud) {
+    for (int i=0;i<cloud[0].size();i++) {
+        if (cloud.size() == 1) {
+            Point3D temp = {cloud[0][i], 0.0f, 0.0f};
+            this->cloud.append(temp);
+        }
+        else if (cloud.size() == 2) {
+            Point3D temp = {cloud[0][i],cloud[1][i],0.0f};
+            this->cloud.append(temp);
+        }
+        else if (cloud.size() > 2) {
+            Point3D temp = {cloud[0][i],cloud[1][i],cloud[2][i]};
+            this->cloud.append(temp);
+        }
+    }
+}
+
+
+void ComponentAnalyzer::normalizeRaduises() {
+    double etalonR = 0.03f;
+    double minRadius = 100500.0f;
+    for(int i=0;i<graphNodePoints.size();i++)
+        if (graphNodePoints[i].second < minRadius)
+            minRadius = graphNodePoints[i].second;
+    for(int i=0;i<graphNodePoints.size();i++)
+        graphNodePoints[i].second = (graphNodePoints[i].second/minRadius)*etalonR;
 }

@@ -42,10 +42,19 @@ private:
     QList<QList<QPair<QString, double> > > prepareGraphicData();
     GraphNode* prepareGraphData();
 
-    QList<QList<QList<double> > > getSectors(QList<QList<double> > cloud);
+    QList<QList<QList<double> > > getSectors(QList<QList<double> > cloud, int divide);
     Point3D getCloudCenter(QList<QList<double> > cloud);
 
-    QList<Point3D> graphNodePoints;
+    QList<QPair<Point3D,double> > graphNodePoints;
+
+    void getCellPoints(QList<QList<double> > cloud, int divide);
+
+    void shiftPoints();
+    void mergePoints();
+
+    QList<Point3D> cloud;
+    void convertCould(QList<QList<double> > cloud);
+    void normalizeRaduises();
 };
 
 #endif // COMPONENTANALYZER_H

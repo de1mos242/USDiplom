@@ -190,18 +190,7 @@ void GLWidget::drawGraphic() {
 void GLWidget::drawGraphNode(GraphNode* node) {
     Sphere3D sphere;
     sphere.SetCurrentColor(Cylinder3D::yellow);
-    Point3D p;
-    p.x = node->coords[0];
-    if (node->coords.size() > 1)
-        p.y = node->coords[1];
-    else
-        p.y = 0.0f;
-    if (node->coords.size() > 2)
-        p.z = node->coords[2];
-    else
-        p.z = 0.0f;
-
-    sphere.SetGeometry(p, 0.05f);
+    sphere.SetGeometry(node->coords, node->radius);
     sphere.draw();
 
 
