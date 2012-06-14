@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MTG 1.0</string>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
@@ -60,7 +60,7 @@
    </widget>
    <widget class="QMenu" name="menuANALIS">
     <property name="title">
-     <string>ANALIS</string>
+     <string>Анализ</string>
     </property>
     <addaction name="StatisticAnalyze"/>
     <addaction name="ClusterAnalyze"/>
@@ -129,7 +129,7 @@
   </action>
   <action name="ComponentAnalyze">
    <property name="text">
-    <string>Компонентный анализ (метод главных компонент)</string>
+    <string>Данные в пространстве главных компонент</string>
    </property>
   </action>
   <action name="ElasticMapAnalyze">
