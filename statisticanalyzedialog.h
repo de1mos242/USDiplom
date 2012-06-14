@@ -27,7 +27,7 @@ public slots:
     
 private:
     Ui::StatisticAnalyzeDialog *ui;
-    void moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what);
+    void moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what, bool needSort);
 };
 
 #endif // STATISTICANALYZEDIALOG_H

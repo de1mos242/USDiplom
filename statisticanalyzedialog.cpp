@@ -17,21 +17,22 @@ StatisticAnalyzeDialog::~StatisticAnalyzeDialog()
 void StatisticAnalyzeDialog::addAviabledParam(QString name, QString value) {
     QListWidgetItem *item = new QListWidgetItem(name);
     item->setData(Qt::UserRole, value);
-    moveParam(ui->selectedParams, ui->aviabledParams, item);
+    moveParam(ui->selectedParams, ui->aviabledParams, item, true);
 }
 
-void StatisticAnalyzeDialog::moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what) {
+void StatisticAnalyzeDialog::moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what, bool needSort = false) {
     int row = from->row(what);
     if (row >= 0)
         from->removeItemWidget(from->takeItem(row));
     to->addItem(what);
-    to->sortItems();
+    if (needSort)
+        to->sortItems();
 }
 
 void StatisticAnalyzeDialog::deleteParam() {
     QList <QListWidgetItem *> selectedItems = ui->selectedParams->selectedItems();
     if (selectedItems.count()>0)
-        moveParam(ui->selectedParams, ui->aviabledParams,selectedItems.at(0));
+        moveParam(ui->selectedParams, ui->aviabledParams,selectedItems.at(0), true);
 }
 
 void StatisticAnalyzeDialog::addParam() {
