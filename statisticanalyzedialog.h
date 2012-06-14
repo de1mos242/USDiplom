@@ -23,6 +23,7 @@ public:
     int iterationCount;
     double shiftK;
     double mergeK;
+    int divideStep;
     void hideAdditions();
 
 public slots:

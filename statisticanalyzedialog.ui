@@ -55,8 +55,11 @@
        </item>
        <item>
         <widget class="QSpinBox" name="IterationCounter">
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
-          <number>200</number>
+          <number>500000</number>
          </property>
          <property name="value">
           <number>50</number>
@@ -78,6 +81,9 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="mergeK">
+       <property name="maximum">
+        <double>999999.989999999990687</double>
+       </property>
        <property name="value">
         <double>0.200000000000000</double>
        </property>
@@ -96,8 +102,35 @@
      </item>
      <item>
       <widget class="QDoubleSpinBox" name="shiftK">
+       <property name="maximum">
+        <double>99999.990000000005239</double>
+       </property>
        <property name="value">
         <double>1.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="divideStepLabel">
+       <property name="text">
+        <string>Коэффициент разбиения</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="divideStep">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+       <property name="value">
+        <number>10</number>
        </property>
       </widget>
      </item>

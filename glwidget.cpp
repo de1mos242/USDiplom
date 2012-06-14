@@ -150,6 +150,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     lastPos = event->pos();
 }
 
+void GLWidget::wheelEvent(QWheelEvent * event) {
+
+}
+
 void GLWidget::setCoords(QList<QList<QPair<QString, double> > > coords) {
     this->points = coords;
 }

@@ -60,6 +60,7 @@ private:
     int iterationCount;
     double shiftK;
     double mergeK;
+    int divideStep;
 };
 
 #endif // COMPONENTANALYZER_H

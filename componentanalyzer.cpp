@@ -241,7 +241,7 @@ GraphNode* ComponentAnalyzer::prepareGraphData() {
     GraphNode* temp = new GraphNode();
     QList<QList<double> > workSector = iTMatrix;
 
-    getCellPoints(workSector, 10);
+    getCellPoints(workSector, divideStep);
     convertCould(iTMatrix);
 
     for(int i=0;i<iterationCount;i++) {
@@ -580,6 +580,7 @@ bool ComponentAnalyzer::showDialog() {
     parametersList = dialog->ParametersList;
     mergeK = dialog->mergeK;
     shiftK = dialog->shiftK;
+    divideStep = dialog->divideStep;
     iterationCount = dialog->iterationCount;
 
     return true;

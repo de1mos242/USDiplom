@@ -54,6 +54,7 @@ void StatisticAnalyzeDialog::run() {
     this->shiftK = ui->shiftK->value();
     this->mergeK = ui->mergeK->value();
     this->iterationCount = ui->IterationCounter->value();
+    this->divideStep = ui->divideStep->value();
     this->close();
 }
 
@@ -66,7 +67,9 @@ void StatisticAnalyzeDialog::hideAdditions() {
     ui->shiftLabel->setVisible(false);
     ui->mergeLabel->setVisible(false);
     ui->iterationLabel->setVisible(false);
+    ui->divideStepLabel->setVisible(false);
     ui->shiftK->setVisible(false);
     ui->mergeK->setVisible(false);
     ui->IterationCounter->setVisible(false);
+    ui->divideStep->setVisible(false);
 }
