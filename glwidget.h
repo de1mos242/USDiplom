@@ -48,6 +48,7 @@ private:
      int xRot;
      int yRot;
      int zRot;
+     double scale;
      QPoint lastPos;
      QColor qtGreen;
      QColor qtPurple;
