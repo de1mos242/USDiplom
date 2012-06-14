@@ -20,6 +20,7 @@ GLWidget::GLWidget(QWidget *parent)
     xRot = 0;
     yRot = 0;
     zRot = 0;
+    scale = -6.0f;
 
     qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
     qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
@@ -96,7 +97,7 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
-    glTranslatef(0.0,0.0f,-6.0f);
+    glTranslatef(0.0,0.0f,scale);
 
     glRotatef(xRot,1.0f,0.0f,0.0f);
     glRotatef(yRot,0.0f,1.0f,0.0f);
@@ -151,7 +152,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 void GLWidget::wheelEvent(QWheelEvent * event) {
-
+    scale += event->delta()*0.005f;
+    updateGL();
 }
 
 void GLWidget::setCoords(QList<QList<QPair<QString, double> > > coords) {
