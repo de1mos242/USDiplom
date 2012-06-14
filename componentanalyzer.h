@@ -25,6 +25,11 @@ private:
 
     QList<QList<double> > PMatrix;
     QList<QList<double> > TMatrix;
+
+    void normalize();
+
+    QList<QList<double> > iMatrix;
+    void getIMatrix();
 };
 
 #endif // COMPONENTANALYZER_H

@@ -155,6 +155,8 @@ void ComponentAnalyzer::fillInputData() {
         else
             skipRow = false;
     }
+    getIMatrix();
+    normalize();
 }
 
 QHash<QString,QString> ComponentAnalyzer::getAllParams() {
@@ -164,4 +166,27 @@ QHash<QString,QString> ComponentAnalyzer::getAllParams() {
         result.insert(QString::number(i), headerItemText);
     }
     return result;
+}
+
+void ComponentAnalyzer::normalize() {
+    for (int col=0;col<iMatrix.size();col++) {
+        double avg = average(iMatrix[col]);
+        double deriviation = standardDeviation(iMatrix[col]);
+        for (int row=0;row<iMatrix[col].size();row++) {
+            double value = (iMatrix[col][row] - avg)/deriviation;
+            matrix[row][col] = value;
+        }
+    }
+}
+
+void ComponentAnalyzer::getIMatrix() {
+    QList<QList<double> > temp;
+    for (int col=0;col<matrix[0].size();col++) {
+        QList<double> column;
+        for (int row=0;row<matrix.size();row++) {
+            column.append(matrix[row][col]);
+        }
+        temp.append(column);
+    }
+    iMatrix = temp;
 }
