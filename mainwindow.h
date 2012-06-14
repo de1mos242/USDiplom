@@ -25,6 +25,7 @@ private:
     void FileAction(QAction*);
     Ui::MainWindow *ui;
     void showOpenedFile(QString);
+    void saveOpenedTab();
 
     QHash <int,QTableWidget *> *tables;
 };

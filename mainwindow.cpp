@@ -10,6 +10,7 @@
 #include "componentanalyzer.h"
 #include "linearcorrelationanalyzer.h"
 #include "spearmananalizer.h"
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -98,6 +99,9 @@ void MainWindow::FileAction(QAction * fileAction) {
         }
 
     }
+    else if (fileAction->objectName() == "SaveAs") {
+        saveOpenedTab();
+    }
     else if (fileAction->objectName() == "Exit"){
         this->close();
     }
@@ -141,4 +145,36 @@ void MainWindow::showOpenedFile(QString filename) {
     table->resizeColumnsToContents();
 
     tables->insert(ui->tabWidget->currentIndex(), table);
+}
+
+void MainWindow::saveOpenedTab() {
+    if (ui->tabWidget->currentIndex() == -1)
+        return;
+    QTableWidget* openedTab = tables->value(ui->tabWidget->currentIndex());
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save file"), "", tr("Files (*.csv)"));
+    if (fileName == "")
+        return;
+
+    QFile *file = new QFile(fileName);
+    file->open(QIODevice::Text|QIODevice::ReadWrite);
+    QByteArray nodeSep = ";";
+    QByteArray lineSep = "\n";
+    //QTextStream ts(file);
+    for (int i=0;i<openedTab->columnCount();i++) {
+        if (i!=0)
+            file->write(nodeSep);
+        file->write(openedTab->horizontalHeaderItem(i)->text().toUtf8());
+    }
+    file->write(lineSep);
+    for (int row=0;row< openedTab->rowCount();row++) {
+        for (int col = 0;col < openedTab->columnCount();col++) {
+            if (col!=0)
+                file->write(nodeSep);
+            file->write(openedTab->itemAt(row, col)->text().toUtf8());
+        }
+        file->write(lineSep);
+    }
+    file->flush();
+    file->close();
 }
