@@ -18,6 +18,7 @@ public:
 protected:
     virtual QHash<QString,QString> getAllParams();
     virtual void fillInputData();
+    virtual bool showDialog();
 
 private:
     QList<QList<double> > results;
@@ -55,6 +56,10 @@ private:
     QList<Point3D> cloud;
     void convertCould(QList<QList<double> > cloud);
     void normalizeRaduises();
+
+    int iterationCount;
+    double shiftK;
+    double mergeK;
 };
 
 #endif // COMPONENTANALYZER_H

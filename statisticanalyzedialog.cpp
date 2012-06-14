@@ -51,10 +51,22 @@ void StatisticAnalyzeDialog::run() {
         msg->exec();
         return;
     }
+    this->shiftK = ui->shiftK->value();
+    this->mergeK = ui->mergeK->value();
+    this->iterationCount = ui->IterationCounter->value();
     this->close();
 }
 
 void StatisticAnalyzeDialog::cancel() {
     ParametersList = new QList<QString>();
     this->close();
+}
+
+void StatisticAnalyzeDialog::hideAdditions() {
+    ui->shiftLabel->setVisible(false);
+    ui->mergeLabel->setVisible(false);
+    ui->iterationLabel->setVisible(false);
+    ui->shiftK->setVisible(false);
+    ui->mergeK->setVisible(false);
+    ui->IterationCounter->setVisible(false);
 }

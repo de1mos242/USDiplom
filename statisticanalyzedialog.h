@@ -18,6 +18,12 @@ public:
     explicit StatisticAnalyzeDialog(QWidget *parent = 0);
     ~StatisticAnalyzeDialog();
     void addAviabledParam(QString name, QString value);
+    Ui::StatisticAnalyzeDialog *ui;
+
+    int iterationCount;
+    double shiftK;
+    double mergeK;
+    void hideAdditions();
 
 public slots:
     void addParam();
@@ -26,7 +32,6 @@ public slots:
     void cancel();
     
 private:
-    Ui::StatisticAnalyzeDialog *ui;
     void moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what);
 };
 

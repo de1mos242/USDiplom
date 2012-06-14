@@ -8,6 +8,7 @@
 #include "glwidget.h"
 #include "graphnode.h"
 #include "vector.h"
+#include "statisticanalyzedialog.h"
 
 ComponentAnalyzer::ComponentAnalyzer()
 {
@@ -243,7 +244,7 @@ GraphNode* ComponentAnalyzer::prepareGraphData() {
     getCellPoints(workSector, 10);
     convertCould(iTMatrix);
 
-    for(int i=0;i<50;i++) {
+    for(int i=0;i<iterationCount;i++) {
         shiftPoints();
         mergePoints();
     }
@@ -500,7 +501,7 @@ void ComponentAnalyzer::shiftPoints() {
         for (int i=0;i<vectors.size();i++)
             sumVector = sumVector.sum(vectors[i]);
 
-        double step = sumVector.length()/vectors.size();
+        double step = (sumVector.length()/vectors.size()) * shiftK;
 
         graphNodePoints[idx].first = sumVector.movePoint(point, step);
     }
@@ -517,7 +518,7 @@ void ComponentAnalyzer::mergePoints() {
             double dy = (p1.y-p2.y)*(p1.y-p2.y);
             double dz = (p1.z-p2.z)*(p1.z-p2.z);
 
-            if (sqrt(dx+dy+dz) >= (r1 + r2)/10)
+            if (sqrt(dx+dy+dz) >= (r1 + r2) * mergeK)
                 continue;
 
             double cx = (p1.x + p2.x)/2;
@@ -559,4 +560,27 @@ void ComponentAnalyzer::normalizeRaduises() {
             minRadius = graphNodePoints[i].second;
     for(int i=0;i<graphNodePoints.size();i++)
         graphNodePoints[i].second = (graphNodePoints[i].second/minRadius)*etalonR;
+}
+
+bool ComponentAnalyzer::showDialog() {
+    fillInputTableData();
+    StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
+    QHashIterator<QString,QString> iterator(this->getAllParams());
+    while (iterator.hasNext()) {
+        iterator.next();
+        dialog->addAviabledParam(iterator.value(), iterator.key());
+    }
+    if (!ShowGraph) {
+        dialog->hideAdditions();
+    }
+    dialog->exec();
+    if (dialog->ParametersList->count()==0) {
+        return false;
+    }
+    parametersList = dialog->ParametersList;
+    mergeK = dialog->mergeK;
+    shiftK = dialog->shiftK;
+    iterationCount = dialog->iterationCount;
+
+    return true;
 }

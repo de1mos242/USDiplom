@@ -39,10 +39,11 @@ protected:
     double variance(QList<double>);
     double standardDeviation(QList<double>);
     double roundValue(double value);
+    void fillInputTableData();
 
 private:
     void fillHeaderList();
-    void fillInputTableData();
+
 };
 
 #endif // BASEANALYZER_H

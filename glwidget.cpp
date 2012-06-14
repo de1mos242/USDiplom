@@ -174,7 +174,7 @@ void GLWidget::drawData() {
 
     SnowFlake3D flake;
     for (int i = 0;i<dots.size();i++) {
-        flake.SetCurrentColor(SnowFlake3D::red);
+        flake.SetCurrentColor(SnowFlake3D::blue);
         flake.SetGeometry(dots[i], 0.04f);
         flake.draw();
         //Figure3D::SetNewColor(Figure3D::green);
@@ -189,7 +189,7 @@ void GLWidget::drawGraphic() {
 
 void GLWidget::drawGraphNode(GraphNode* node) {
     Sphere3D sphere;
-    sphere.SetCurrentColor(Cylinder3D::yellow);
+    sphere.SetCurrentColor(Cylinder3D::red);
     sphere.SetGeometry(node->coords, node->radius);
     sphere.draw();
 
