@@ -130,10 +130,10 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     tab->layout()->addWidget(Ttable);
     Ttable->resizeColumnsToContents();
 
-    QWidget * tab2 = AdditionalWidgets.at(1);
+    /*QWidget * tab2 = AdditionalWidgets.at(1);
     tab2->setObjectName("gl");
     GLWidget *gl = new GLWidget(tab2);
-    gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);*/
 
 }
 
