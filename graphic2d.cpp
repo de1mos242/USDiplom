@@ -13,12 +13,13 @@ Graphic2D::~Graphic2D()
 
 void Graphic2D::drawGraphic() {
     SnowFlake3D flake;
+    QFont* font = new QFont("Times", 14, QFont::Normal);
     foreach (Point3DEx p, points) {
         flake.SetCurrentColor(p.color);
         flake.SetGeometry(p.getPoint3D(), 0.04f);
         flake.draw();
-        Figure3D::SetNewColor(Figure3D::green);
-        renderText(p.x, p.y, p.z, p.label);
+        Figure3D::SetNewColor(Figure3D::darkGreen);
+        renderText(p.x, p.y, p.z, p.label, *font);
     }
 }
 

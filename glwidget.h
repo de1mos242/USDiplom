@@ -21,7 +21,7 @@ class GLWidget:public QGLWidget
     void SetCoordsData(Point3D coords,
                        QList<QString> coordLabels,
                        Figure3D::GColor coordColor = Figure3D::black,
-                       Figure3D::GColor coordsLabelsColor = Figure3D::green);
+                       Figure3D::GColor coordsLabelsColor = Figure3D::darkGreen);
 
 public slots:
      void setXRotation(int angle);

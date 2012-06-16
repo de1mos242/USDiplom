@@ -165,6 +165,7 @@ void GLWidget::SetCoordsData(Point3D coords,
 }
 
 void GLWidget::drawCoords() {
+    QFont* font = new QFont("Times", 14, QFont::Normal);
     Line3D xCoord;
     xCoord.SetCurrentColor(coordsColor);
     GLfloat xLen = coords.x;
@@ -175,7 +176,7 @@ void GLWidget::drawCoords() {
     xCoord.setPoints(xFrom, xTo);
     xCoord.draw();
     Figure3D::SetNewColor(coordsLabelsColor);
-    renderText(xLen, 0.0f,0.0f,coordsLabels[0]);
+    renderText(xLen, 0.0f,0.0f,coordsLabels[0], *font);
 
     Line3D yCoord;
     yCoord.SetCurrentColor(coordsColor);
@@ -187,7 +188,7 @@ void GLWidget::drawCoords() {
     yCoord.setPoints(yFrom, yTo);
     yCoord.draw();
     Figure3D::SetNewColor(coordsLabelsColor);
-    renderText(0.0f,yLen, 0.0f,coordsLabels[1]);
+    renderText(0.0f,yLen, 0.0f,coordsLabels[1], *font);
 
     GLfloat zLen = coords.z;
     if (dimentions == 3) {
@@ -200,7 +201,7 @@ void GLWidget::drawCoords() {
         zCoord.setPoints(zFrom, zTo);
         zCoord.draw();
         Figure3D::SetNewColor(coordsLabelsColor);
-        renderText(0.0f, 0.0f,zLen, coordsLabels[2]);
+        renderText(0.0f, 0.0f,zLen, coordsLabels[2], *font);
     }
 
     GLfloat tickSize = 0.04f;
@@ -211,14 +212,14 @@ void GLWidget::drawCoords() {
         tickCenter.x = i;
         tick.SetGeometry(tickCenter, tickSize);
         tick.draw();
-        renderText(i, 0.0f,0.0f, QString::number(i));
+        renderText(i, 0.0f,0.0f, QString::number(i), *font);
     }
     for (int i=(int)-yLen;i<yLen;i++) {
         Point3D tickCenter;
         tickCenter.y = i;
         tick.SetGeometry(tickCenter, tickSize);
         tick.draw();
-        renderText(0.0f,i, 0.0f, QString::number(i));
+        renderText(0.0f,i, 0.0f, QString::number(i), *font);
     }
     if (dimentions == 3) {
         for (int i=(int)-zLen;i<zLen;i++) {
@@ -226,7 +227,7 @@ void GLWidget::drawCoords() {
             tickCenter.z = i;
             tick.SetGeometry(tickCenter, tickSize);
             tick.draw();
-            renderText(0.0f,0.0f, i, QString::number(i));
+            renderText(0.0f,0.0f, i, QString::number(i), *font);
         }
     }
 }

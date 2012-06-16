@@ -28,6 +28,9 @@ void Figure3D::setColor(GColor color) {
     case yellow:
         glColor3f(1.0f,1.0f,0.0f);
         break;
+    case darkGreen:
+        glColor3f(0.0f,0.3f,0.0f);
+        break;
     }
 }
 

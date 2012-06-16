@@ -10,7 +10,7 @@ public:
     Figure3D();
 
     enum GColor {
-        black, white, red, green, blue, yellow
+        black, white, red, green, blue, yellow,darkGreen
     };
 
     virtual void draw();
