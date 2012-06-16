@@ -19,7 +19,14 @@ SOURCES += main.cpp\
     componentanalyzer.cpp \
     linearcorrelationanalyzer.cpp \
     spearmananalizer.cpp \
-    glwidget.cpp
+    glwidget.cpp \
+    figure3d.cpp \
+    line3d.cpp \
+    snowflake3d.cpp \
+    cylinder3d.cpp \
+    sphere3d.cpp \
+    vector.cpp \
+    graphic2d.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -29,7 +36,14 @@ HEADERS  += mainwindow.h \
     componentanalyzer.h \
     linearcorrelationanalyzer.h \
     spearmananalizer.h \
-    glwidget.h
+    glwidget.h \
+    figure3d.h \
+    line3d.h \
+    snowflake3d.h \
+    cylinder3d.h \
+    sphere3d.h \
+    vector.h \
+    graphic2d.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

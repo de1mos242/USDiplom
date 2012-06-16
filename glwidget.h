@@ -4,6 +4,8 @@
 #include <QtGui>
 #include <QGLWidget>
 #include <GL/glu.h>
+#include <QPair>
+#include <figure3d.h>
 
 class GLWidget:public QGLWidget
 {
@@ -15,6 +17,11 @@ class GLWidget:public QGLWidget
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+
+    void SetCoordsData(Point3D coords,
+                       QList<QString> coordLabels,
+                       Figure3D::GColor coordColor = Figure3D::black,
+                       Figure3D::GColor coordsLabelsColor = Figure3D::green);
 
 public slots:
      void setXRotation(int angle);
@@ -32,15 +39,29 @@ protected:
     void resizeGL(int width, int height);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+    virtual void drawGraphic();
+
+
+
+    int dimentions;
 
 private:
-     //QtLogo *logo;
      int xRot;
      int yRot;
      int zRot;
+     double scale;
      QPoint lastPos;
-     QColor qtGreen;
-     QColor qtPurple;
+
+     bool showGraphic;
+     bool showCoords;
+
+     Point3D coords;
+     QList<QString> coordsLabels;
+     Figure3D::GColor coordsLabelsColor;
+     Figure3D::GColor coordsColor;
+
+     void drawCoords();
 };
 
 

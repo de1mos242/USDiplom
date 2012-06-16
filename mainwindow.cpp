@@ -44,7 +44,10 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     else if (action == "ComponentAnalyze") {
         analyzer = new ComponentAnalyzer();
         analyzer->AdditionalWidgets.append(new QWidget());
-        //analyzer->AdditionalWidgets.append(new QWidget());
+        analyzer->AdditionalWidgets.append(new QWidget());
+        analyzer->AdditionalWidgets.append(new QWidget());
+        analyzer->AdditionalWidgets.append(new QWidget());
+        analyzer->AdditionalWidgets.append(new QWidget());
     }
     else if (action == "LinearAnalyze") {
         analyzer = new LinearCorrelationAnalyzer();

@@ -4,6 +4,7 @@
 #include <QHash>
 #include <QList>
 #include "baseanalyzer.h"
+#include "figure3d.h"
 
 class ComponentAnalyzer : public BaseAnalyzer
 {
@@ -30,6 +31,11 @@ private:
 
     QList<QList<double> > iMatrix;
     void getIMatrix();
+
+    QList<Point3DEx> getTmatrix1();
+    QList<Point3DEx> getTmatrix2();
+    QList<Point3DEx> getPmatrix1();
+    QList<Point3DEx> getPmatrix2();
 };
 
 #endif // COMPONENTANALYZER_H

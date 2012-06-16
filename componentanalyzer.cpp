@@ -5,7 +5,7 @@
 #include <QMatrix>
 #include <qmath.h>
 #include <QGridLayout>
-#include "glwidget.h"
+#include "graphic2d.h"
 
 ComponentAnalyzer::ComponentAnalyzer()
 {
@@ -131,10 +131,57 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     tab->layout()->addWidget(Ttable);
     Ttable->resizeColumnsToContents();
 
-    /*QWidget * tab2 = AdditionalWidgets.at(1);
-    tab2->setObjectName("gl");
-    GLWidget *gl = new GLWidget(tab2);
-    gl->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);*/
+    Point3D coords;
+    coords.x = 5.0f;
+    coords.y = 5.0f;
+    QList<QString> coordLables;
+
+    QWidget * tab2 = AdditionalWidgets.at(1);
+    tab2->setObjectName("T1");
+    Graphic2D * g1 = new Graphic2D(tab2);
+    //g1->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    coordLables.append(headerList.at(parametersList->at(0).toInt()));
+    coordLables.append(headerList.at(parametersList->at(1).toInt()));
+    g1->SetCoordsData(coords, coordLables);
+    g1->SetPoints(getTmatrix1());
+    tab2->setLayout(new QGridLayout());
+    tab2->layout()->addWidget(g1);
+
+    QWidget * tab3 = AdditionalWidgets.at(2);
+    tab3->setObjectName("T2");
+    Graphic2D * g2 = new Graphic2D(tab3);
+    //g2->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    coordLables.clear();
+    coordLables.append(headerList.at(parametersList->at(2).toInt()));
+    coordLables.append(headerList.at(parametersList->at(3).toInt()));
+    g2->SetCoordsData(coords, coordLables);
+    g2->SetPoints(getTmatrix2());
+    tab3->setLayout(new QGridLayout());
+    tab3->layout()->addWidget(g2);
+
+    QWidget * tab4 = AdditionalWidgets.at(3);
+    tab4->setObjectName("P1");
+    Graphic2D * g3 = new Graphic2D(tab4);
+    //g3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    coordLables.clear();
+    coordLables.append(headerList.at(parametersList->at(0).toInt()));
+    coordLables.append(headerList.at(parametersList->at(1).toInt()));
+    g3->SetCoordsData(coords, coordLables);
+    g3->SetPoints(getPmatrix1());
+    tab4->setLayout(new QGridLayout());
+    tab4->layout()->addWidget(g3);
+
+    QWidget * tab5 = AdditionalWidgets.at(4);
+    tab5->setObjectName("P2");
+    Graphic2D * g4 = new Graphic2D(tab5);
+    //g4->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    coordLables.clear();
+    coordLables.append(headerList.at(parametersList->at(2).toInt()));
+    coordLables.append(headerList.at(parametersList->at(3).toInt()));
+    g4->SetCoordsData(coords, coordLables);
+    g4->SetPoints(getPmatrix2());
+    tab5->setLayout(new QGridLayout());
+    tab5->layout()->addWidget(g4);
 
 }
 
@@ -190,4 +237,56 @@ void ComponentAnalyzer::getIMatrix() {
         temp.append(column);
     }
     iMatrix = temp;
+}
+
+QList<Point3DEx> ComponentAnalyzer::getTmatrix1() {
+    QList<Point3DEx> result;
+    for (int i=0;i<TMatrix.count();i++) {
+        Point3DEx p;
+        p.x = TMatrix[i][0];
+        p.y = TMatrix[i][1];
+        p.label = QString::number(i);
+        p.color = Figure3D::red;
+        result.append(p);
+    }
+    return result;
+}
+
+QList<Point3DEx> ComponentAnalyzer::getTmatrix2() {
+    QList<Point3DEx> result;
+    for (int i=0;i<TMatrix.count();i++) {
+        Point3DEx p;
+        p.x = TMatrix[i][2];
+        p.y = TMatrix[i][3];
+        p.label = QString::number(i);
+        p.color = Figure3D::red;
+        result.append(p);
+    }
+    return result;
+}
+
+QList<Point3DEx> ComponentAnalyzer::getPmatrix1() {
+    QList<Point3DEx> result;
+    for (int i=0;i<PMatrix.count();i++) {
+        Point3DEx p;
+        p.x = PMatrix[i][0];
+        p.y = PMatrix[i][1];
+        p.label = headerList.at(parametersList->at(i).toInt());
+        p.color = Figure3D::red;
+        result.append(p);
+    }
+    return result;
+}
+
+QList<Point3DEx> ComponentAnalyzer::getPmatrix2() {
+    QList<Point3DEx> result;
+    for (int i=0;i<PMatrix.count();i++) {
+        Point3DEx p;
+        p.x = PMatrix[i][2];
+        p.y = PMatrix[i][3];
+        p.label = headerList.at(parametersList->at(i).toInt());
+        p.color = Figure3D::red;
+        result.append(p);
+    }
+    return result;
 }

@@ -5,6 +5,10 @@
 #include <math.h>
 
 #include "glwidget.h"
+#include "snowflake3d.h"
+#include "line3d.h"
+#include "cylinder3d.h"
+#include "sphere3d.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE  0x809D
@@ -16,9 +20,12 @@ GLWidget::GLWidget(QWidget *parent)
     xRot = 0;
     yRot = 0;
     zRot = 0;
+    scale = -6.0f;
 
-    qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
-    qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
+    showGraphic = true;
+    showCoords = true;
+
+    dimentions = 2;
 }
 
 GLWidget::~GLWidget()
@@ -27,12 +34,12 @@ GLWidget::~GLWidget()
 
 QSize GLWidget::minimumSizeHint() const
 {
-    return QSize(50, 50);
+    return QSize(((QWidget*)parent())->width(), ((QWidget*)parent())->height());
 }
 
 QSize GLWidget::sizeHint() const
 {
-    return QSize(500, 500);
+    return QSize(((QWidget*)parent())->width(), ((QWidget*)parent())->height());
 }
 
 static void qNormalizeAngle(int &angle)
@@ -76,34 +83,30 @@ void GLWidget::setZRotation(int angle)
 void GLWidget::initializeGL()
 {
     glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
     glClearDepth(1.0f);                         // Depth Buffer Setup
     glEnable(GL_DEPTH_TEST);                        // Enables Depth Testing
     glDepthFunc(GL_LEQUAL);                         // The Type Of Depth Test To Do
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Really Nice Perspective Calculations
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glEnable(GL_LINE_SMOOTH);
 }
 
 void GLWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glLoadIdentity();
+    glLoadIdentity();
 
-      glTranslatef(-1.5f,0.0f,-6.0f);
+    glTranslatef(0.0,0.0f,scale);
 
-      glBegin(GL_TRIANGLES);
-        glVertex3f( 0.0f, 1.0f, 0.0f);
-        glVertex3f(-1.0f,-1.0f, 0.0f);
-        glVertex3f( 1.0f,-1.0f, 0.0f);
-      glEnd();
+    glRotatef(xRot,1.0f,0.0f,0.0f);
+    glRotatef(yRot,0.0f,1.0f,0.0f);
+    glRotatef(zRot,0.0f,0.0f,1.0f);
 
-      glTranslatef(3.0f,0.0f,0.0f);
-
-      glBegin(GL_QUADS);
-        glVertex3f(-1.0f, 1.0f, 0.0f);
-        glVertex3f( 1.0f, 1.0f, 0.0f);
-        glVertex3f( 1.0f,-1.0f, 0.0f);
-        glVertex3f(-1.0f,-1.0f, 0.0f);
-      glEnd();
+    if (showCoords)
+        drawCoords();
+    if (showGraphic)
+        drawGraphic();
 }
 
 void GLWidget::resizeGL(int width, int height)
@@ -134,12 +137,102 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
     int dx = event->x() - lastPos.x();
     int dy = event->y() - lastPos.y();
 
+    int boost = 1;
+
     if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot + 8 * dy);
-        setYRotation(yRot + 8 * dx);
+        setXRotation(xRot + boost * dy);
+        setYRotation(yRot + boost * dx);
     } else if (event->buttons() & Qt::RightButton) {
-        setXRotation(xRot + 8 * dy);
-        setZRotation(zRot + 8 * dx);
+        setXRotation(xRot + boost * dy);
+        setZRotation(zRot + boost * dx);
     }
     lastPos = event->pos();
 }
+
+void GLWidget::wheelEvent(QWheelEvent * event) {
+    scale += event->delta()*0.005f;
+    updateGL();
+}
+
+void GLWidget::SetCoordsData(Point3D coords,
+                             QList<QString> coordLabels,
+                             Figure3D::GColor coordColor,
+                             Figure3D::GColor coordsLabelsColor) {
+    this->coords = coords;
+    this->coordsLabels = coordLabels;
+    this->coordsColor = coordColor;
+    this->coordsLabelsColor = coordsLabelsColor;
+}
+
+void GLWidget::drawCoords() {
+    Line3D xCoord;
+    xCoord.SetCurrentColor(coordsColor);
+    GLfloat xLen = coords.x;
+    Point3D xFrom;
+    xFrom.x = -xLen;
+    Point3D xTo;
+    xTo.x = xLen;
+    xCoord.setPoints(xFrom, xTo);
+    xCoord.draw();
+    Figure3D::SetNewColor(coordsLabelsColor);
+    renderText(xLen, 0.0f,0.0f,coordsLabels[0]);
+
+    Line3D yCoord;
+    yCoord.SetCurrentColor(coordsColor);
+    GLfloat yLen = coords.y;
+    Point3D yFrom;
+    yFrom.y = -yLen;
+    Point3D yTo;
+    yTo.y = yLen;
+    yCoord.setPoints(yFrom, yTo);
+    yCoord.draw();
+    Figure3D::SetNewColor(coordsLabelsColor);
+    renderText(0.0f,yLen, 0.0f,coordsLabels[1]);
+
+    GLfloat zLen = coords.z;
+    if (dimentions == 3) {
+        Line3D zCoord;
+        zCoord.SetCurrentColor(coordsColor);
+        Point3D zFrom;
+        zFrom.z = -zLen;
+        Point3D zTo;
+        zTo.z = zLen;
+        zCoord.setPoints(zFrom, zTo);
+        zCoord.draw();
+        Figure3D::SetNewColor(coordsLabelsColor);
+        renderText(0.0f, 0.0f,zLen, coordsLabels[2]);
+    }
+
+    GLfloat tickSize = 0.04f;
+    SnowFlake3D tick;
+    tick.SetCurrentColor(coordsColor);
+    for (int i=(int)-xLen;i<xLen;i++) {
+        Point3D tickCenter;
+        tickCenter.x = i;
+        tick.SetGeometry(tickCenter, tickSize);
+        tick.draw();
+        renderText(i, 0.0f,0.0f, QString::number(i));
+    }
+    for (int i=(int)-yLen;i<yLen;i++) {
+        Point3D tickCenter;
+        tickCenter.y = i;
+        tick.SetGeometry(tickCenter, tickSize);
+        tick.draw();
+        renderText(0.0f,i, 0.0f, QString::number(i));
+    }
+    if (dimentions == 3) {
+        for (int i=(int)-zLen;i<zLen;i++) {
+            Point3D tickCenter;
+            tickCenter.z = i;
+            tick.SetGeometry(tickCenter, tickSize);
+            tick.draw();
+            renderText(0.0f,0.0f, i, QString::number(i));
+        }
+    }
+}
+
+void GLWidget::drawGraphic() {
+}
+
+
+
