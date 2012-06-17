@@ -11,6 +11,7 @@
 #include "linearcorrelationanalyzer.h"
 #include "spearmananalizer.h"
 #include <QTextStream>
+#include "elacticmapanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -54,6 +55,10 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     }
     else if (action == "SpearmanAnalyze") {
         analyzer = new SpearmanAnalizer();
+    }
+    else if (action == "ElasticMapAnalyze") {
+        analyzer = new ElacticMapAnalyzer();
+        analyzer->AdditionalWidgets.append(new QWidget());
     }
     else {
         QMessageBox msgBox;

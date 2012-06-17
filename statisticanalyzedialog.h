@@ -18,6 +18,10 @@ public:
     explicit StatisticAnalyzeDialog(QWidget *parent = 0);
     ~StatisticAnalyzeDialog();
     void addAviabledParam(QString name, QString value);
+    void addAdditionalParam(QWidget *widget, QString name);
+    int GetIntParam(QString name);
+    double GetDoubleParam(QString name);
+    QString GetStringParam(QString name);
 
 public slots:
     void addParam();
@@ -28,6 +32,8 @@ public slots:
 private:
     Ui::StatisticAnalyzeDialog *ui;
     void moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what, bool needSort);
+
+    QHash<QString,QWidget*> additionalWidgets;
 };
 
 #endif // STATISTICANALYZEDIALOG_H

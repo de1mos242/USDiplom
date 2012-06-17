@@ -15,30 +15,34 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="vLayout">
      <item>
-      <widget class="QListWidget" name="aviabledParams"/>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="addButton">
-         <property name="text">
-          <string>Добавить</string>
-         </property>
-        </widget>
+        <widget class="QListWidget" name="aviabledParams"/>
        </item>
        <item>
-        <widget class="QPushButton" name="deleteButton">
-         <property name="text">
-          <string>Удалить</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QPushButton" name="addButton">
+           <property name="text">
+            <string>Добавить</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="deleteButton">
+           <property name="text">
+            <string>Удалить</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QListWidget" name="selectedParams"/>
        </item>
       </layout>
-     </item>
-     <item>
-      <widget class="QListWidget" name="selectedParams"/>
      </item>
     </layout>
    </item>

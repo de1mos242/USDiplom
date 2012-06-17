@@ -12,6 +12,8 @@ public:
     ComponentAnalyzer();
     virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
+    QList<QList<double> > TMatrix;
+
 
 protected:
     virtual QHash<QString,QString> getAllParams();
@@ -25,7 +27,6 @@ private:
     double e2;
 
     QList<QList<double> > PMatrix;
-    QList<QList<double> > TMatrix;
 
     void normalize();
 

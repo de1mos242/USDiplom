@@ -1,6 +1,10 @@
 #include "statisticanalyzedialog.h"
 #include "ui_statisticanalyzedialog.h"
 #include <QMessageBox>
+#include <QLabel>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
+#include <QTextEdit>
 
 StatisticAnalyzeDialog::StatisticAnalyzeDialog(QWidget *parent) :
     QDialog(parent),
@@ -58,4 +62,31 @@ void StatisticAnalyzeDialog::run() {
 void StatisticAnalyzeDialog::cancel() {
     ParametersList = new QList<QString>();
     this->close();
+}
+
+void StatisticAnalyzeDialog::addAdditionalParam(QWidget *widget, QString name) {
+    QWidget *box = new QWidget();
+    box->setLayout(new QHBoxLayout());
+    QLabel *label = new QLabel();
+    label->setText(name);
+    box->layout()->addWidget(label);
+    box->layout()->addWidget(widget);
+    ui->vLayout->layout()->addWidget(box);
+
+    additionalWidgets.insert(name, widget);
+}
+
+int StatisticAnalyzeDialog::GetIntParam(QString name) {
+    QSpinBox* w = (QSpinBox*)additionalWidgets.value(name);
+    return w->value();
+}
+
+double StatisticAnalyzeDialog::GetDoubleParam(QString name) {
+    QDoubleSpinBox* w = (QDoubleSpinBox*)additionalWidgets.value(name);
+    return w->value();
+}
+
+QString StatisticAnalyzeDialog::GetStringParam(QString name) {
+    QTextEdit* w = (QTextEdit*)additionalWidgets.value(name);
+    return w->toPlainText();
 }

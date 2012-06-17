@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     cylinder3d.cpp \
     sphere3d.cpp \
     vector.cpp \
-    graphic2d.cpp
+    graphic2d.cpp \
+    elacticmapanalyzer.cpp \
+    graphic3d.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -43,7 +45,9 @@ HEADERS  += mainwindow.h \
     cylinder3d.h \
     sphere3d.h \
     vector.h \
-    graphic2d.h
+    graphic2d.h \
+    elacticmapanalyzer.h \
+    graphic3d.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

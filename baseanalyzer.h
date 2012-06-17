@@ -14,6 +14,8 @@ public:
     virtual void DoAnalyze();
     virtual bool showDialog();
     virtual void printResults(QTableWidget *);
+    QList <QString> *parametersList;
+    void fillInputTableData();
 
 
 signals:
@@ -23,7 +25,6 @@ public slots:
 protected:
     QList <QString> headerList;
     virtual QHash<QString,QString> getAllParams();
-    QList <QString> *parametersList;
     int columnsCount;
     int rowsCount;
     virtual void fillInputData();
@@ -41,7 +42,7 @@ protected:
 
 private:
     void fillHeaderList();
-    void fillInputTableData();
+
 };
 
 #endif // BASEANALYZER_H
