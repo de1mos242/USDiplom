@@ -191,9 +191,11 @@ void MainWindow::saveOpenedTab() {
         for (int col = 0;col < openedTab->columnCount();col++) {
             if (col!=0)
                 file->write(nodeSep);
-            QString data = openedTab->item(row, col)->text();
-            QByteArray dataBytes = data.toUtf8();
-            file->write(dataBytes);
+            if (openedTab->item(row, col) != 0) {
+                QString data = openedTab->item(row, col)->text();
+                QByteArray dataBytes = data.toUtf8();
+                file->write(dataBytes);
+            }
         }
         file->write(lineSep);
     }

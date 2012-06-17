@@ -37,7 +37,9 @@ private:
     QList<Point3D> taxons;
     void initTaxons();
 
+
     QList<Point3D> BMatrix;
+    QList<Point3D> BMatrixOld;
     void fillBMatrix();
 
     void findNewTaxons();
@@ -47,6 +49,8 @@ private:
 
     QList<Point3DEx> getTmatrix();
     QList<QList<Point3D> > getNet();
+
+    int iterations;
 
 };
 

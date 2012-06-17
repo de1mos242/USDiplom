@@ -52,14 +52,15 @@ bool ElacticMapAnalyzer::showDialog() {
     fillInputTableData();
     StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
 
-    dialog->addAdditionalParam(new QSpinBox(), "paramP");
-    dialog->addAdditionalParam(new QSpinBox(), "paramQ");
+    dialog->addAdditionalParam(new QSpinBox(), tr("Количество итераций"));
+    dialog->addAdditionalParam(new QSpinBox(), tr("P"));
+    dialog->addAdditionalParam(new QSpinBox(), tr("Q"));
     QDoubleSpinBox* muSP = new QDoubleSpinBox();
     muSP->setMaximum(10000);
-    dialog->addAdditionalParam(muSP, "paramMu");
+    dialog->addAdditionalParam(muSP, tr("Mu"));
     QDoubleSpinBox* lambdaSP = new QDoubleSpinBox();
     lambdaSP->setMaximum(10000);
-    dialog->addAdditionalParam(lambdaSP, "paramLambda");
+    dialog->addAdditionalParam(lambdaSP, tr("Lambda"));
 
     QHashIterator<QString,QString> iterator(this->getAllParams());
     while (iterator.hasNext()) {
@@ -71,11 +72,12 @@ bool ElacticMapAnalyzer::showDialog() {
         return false;
     }
     parametersList = dialog->ParametersList;
-    p = dialog->GetIntParam("paramP");
-    q = dialog->GetIntParam("paramQ");
+    p = dialog->GetIntParam("P");
+    q = dialog->GetIntParam("Q");
     pq = p*q;
-    lambda = dialog->GetDoubleParam("paramLambda");
-    mu = dialog->GetDoubleParam("paramMu");
+    iterations = dialog->GetIntParam(tr("Количество итераций"));
+    lambda = dialog->GetDoubleParam("Lambda");
+    mu = dialog->GetDoubleParam("Mu");
     return true;
 }
 
@@ -92,25 +94,48 @@ void ElacticMapAnalyzer::DoAnalyze() {
     fillInputPoints();
     initTaxons();
     taxonsCount = getTaxonsCount();
-    do {
+    for (int i=0;i<iterations;i++) {
         fillAMatrix();
         fillBMatrix();
         findNewTaxons();
+        if (compareTaxonsCount())
+            break;
     }
-    while (!compareTaxonsCount());
+
 }
 
 void ElacticMapAnalyzer::printResults(QTableWidget * table) {
     table->setObjectName(" Таксоны");
     table->setEditTriggers(QTableWidget::NoEditTriggers);
 
-    table->setColumnCount(3);
-    table->setRowCount(taxons.count());
+    table->setColumnCount(AMatrix[0].size());
+    table->setRowCount(AMatrix.size());
 
-    for(int i=0;i<table->rowCount();i++) {
-        table->setItem(i,0,new QTableWidgetItem(QString::number(taxons[i].x)));
-        table->setItem(i,1,new QTableWidgetItem(QString::number(taxons[i].y)));
-        table->setItem(i,2,new QTableWidgetItem(QString::number(taxons[i].z)));
+    for (int i=0;i<table->columnCount();i++)
+        table->setHorizontalHeaderItem(i,new QTableWidgetItem(QString::number(i)));
+    for (int i=0;i<AMatrix.size();i++)
+        for (int j=0;j<AMatrix[i].size();j++)
+            table->setItem(i,j,new QTableWidgetItem(QString::number(AMatrix[i][j])));
+    int startRow = table->rowCount();
+    table->setRowCount(table->rowCount()+prevTaxonsCountHistory[0].size());
+    for(int i=0;i<prevTaxonsCountHistory[0].size();i++) {
+        table->setItem(startRow+i,0,new QTableWidgetItem(QString::number(prevTaxonsCountHistory[0][i])));
+    }
+
+    startRow = table->rowCount();
+    table->setRowCount(table->rowCount()+taxons.size());
+    for(int i=0;i<taxons.size();i++) {
+        table->setItem(startRow+i,0,new QTableWidgetItem(QString::number(taxons[i].x)));
+        table->setItem(startRow+i,1,new QTableWidgetItem(QString::number(taxons[i].y)));
+        table->setItem(startRow+i,2,new QTableWidgetItem(QString::number(taxons[i].z)));
+    }
+
+    startRow = table->rowCount();
+    table->setRowCount(table->rowCount()+BMatrixOld.size());
+    for(int i=0;i<BMatrixOld.size();i++) {
+        table->setItem(startRow+i,0,new QTableWidgetItem(QString::number(BMatrixOld[i].x)));
+        table->setItem(startRow+i,1,new QTableWidgetItem(QString::number(BMatrixOld[i].y)));
+        table->setItem(startRow+i,2,new QTableWidgetItem(QString::number(BMatrixOld[i].z)));
     }
 
     Point3D coords;
@@ -249,12 +274,12 @@ void ElacticMapAnalyzer::initTaxons() {
     for (int pidx=0;pidx<p;pidx++)
         for(int qidx=0;qidx<q;qidx++) {
             Point3D px;
-            px.x = pidx/1.0;
-            px.y = qidx/1.0;
-            px.z = pidx/1.0;
-            px.x -= p/2.0;
-            px.y -= q/2.0;
-            px.z -= p/2.0;
+            px.x = pidx/10.0;
+            px.y = qidx/10.0;
+            px.z = pidx/10.0;
+            px.x -= p/20.0;
+            px.y -= q/20.0;
+            px.z -= p/20.0;
             taxons.append(px);
         }
 }
@@ -304,11 +329,11 @@ void ElacticMapAnalyzer::fillBMatrix() {
             p.y += pointsInTaxon[d].y;
             p.z += pointsInTaxon[d].z;
         }
-        if (pointsCount > 0) {
+        /*if (pointsCount > 0) {
             p.x /= pointsCount;
             p.y /= pointsCount;
             p.z /= pointsCount;
-        }
+        }*/
         BMatrix.append(p);
     }
 }
@@ -362,6 +387,7 @@ void ElacticMapAnalyzer::findNewTaxons() {
 
 QList<QList<double> > ElacticMapAnalyzer::findTriangleAMatrix() {
     QList<QList<double> > result = AMatrix;
+    BMatrixOld = BMatrix;
 
     for (int col = 0;col<result[0].size()-1;col++) {
         for (int row = col+1;row < result.size();row++) {
