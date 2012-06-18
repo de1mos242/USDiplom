@@ -13,6 +13,7 @@ BaseAnalyzer::BaseAnalyzer(QObject *parent) :
 bool BaseAnalyzer::showDialog() {
     fillInputTableData();
     StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
+    dialog->SetDialogName(name);
     QHashIterator<QString,QString> iterator(this->getAllParams());
     while (iterator.hasNext()) {
         iterator.next();

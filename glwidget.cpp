@@ -20,7 +20,7 @@ GLWidget::GLWidget(QWidget *parent)
     xRot = 0;
     yRot = 0;
     zRot = 0;
-    scale = -6.0f;
+    scale = -10.0f;
 
     showGraphic = true;
     showCoords = true;
@@ -157,11 +157,20 @@ void GLWidget::wheelEvent(QWheelEvent * event) {
 void GLWidget::SetCoordsData(Point3D coords,
                              QList<QString> coordLabels,
                              Figure3D::GColor coordColor,
-                             Figure3D::GColor coordsLabelsColor) {
+                             Figure3D::GColor coordsLabelsColor,
+                             Point3D* scale) {
     this->coords = coords;
     this->coordsLabels = coordLabels;
     this->coordsColor = coordColor;
     this->coordsLabelsColor = coordsLabelsColor;
+    if (scale == 0) {
+        coordsScale.x = 1.0;
+        coordsScale.y = 1.0;
+        coordsScale.z = 1.0;
+    }
+    else {
+        coordsScale = *scale;
+    }
 }
 
 void GLWidget::drawCoords() {
@@ -212,14 +221,14 @@ void GLWidget::drawCoords() {
         tickCenter.x = i;
         tick.SetGeometry(tickCenter, tickSize);
         tick.draw();
-        renderText(i, 0.0f,0.0f, QString::number(i), *font);
+        renderText(i, 0.0f,0.0f, QString::number((int)(i/coordsScale.x)), *font);
     }
     for (int i=(int)-yLen;i<yLen;i++) {
         Point3D tickCenter;
         tickCenter.y = i;
         tick.SetGeometry(tickCenter, tickSize);
         tick.draw();
-        renderText(0.0f,i, 0.0f, QString::number(i), *font);
+        renderText(0.0f,i, 0.0f, QString::number((int)(i/coordsScale.y)), *font);
     }
     if (dimentions == 3) {
         for (int i=(int)-zLen;i<zLen;i++) {
@@ -227,7 +236,7 @@ void GLWidget::drawCoords() {
             tickCenter.z = i;
             tick.SetGeometry(tickCenter, tickSize);
             tick.draw();
-            renderText(0.0f,0.0f, i, QString::number(i), *font);
+            renderText(0.0f,0.0f, i, QString::number((int)(i/coordsScale.z)), *font);
         }
     }
 }

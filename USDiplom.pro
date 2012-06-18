@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     vector.cpp \
     graphic2d.cpp \
     elacticmapanalyzer.cpp \
-    graphic3d.cpp
+    graphic3d.cpp \
+    pairregressionanalyzer.cpp \
+    pairregressionanalyzergraphic.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -47,7 +49,9 @@ HEADERS  += mainwindow.h \
     vector.h \
     graphic2d.h \
     elacticmapanalyzer.h \
-    graphic3d.h
+    graphic3d.h \
+    pairregressionanalyzer.h \
+    pairregressionanalyzergraphic.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

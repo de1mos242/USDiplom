@@ -135,6 +135,8 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     coords.x = 5.0f;
     coords.y = 5.0f;
     QList<QString> coordLables;
+    coordLables.append("PC1");
+    coordLables.append("PC2");
 
     QWidget * tab2 = AdditionalWidgets.at(1);
     tab2->setObjectName("T1");
@@ -146,6 +148,10 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     g1->SetPoints(getTmatrix1());
     tab2->setLayout(new QGridLayout());
     tab2->layout()->addWidget(g1);
+
+    coordLables.clear();
+    coordLables.append("PC3");
+    coordLables.append("PC4");
 
     QWidget * tab3 = AdditionalWidgets.at(2);
     tab3->setObjectName("T2");
@@ -159,25 +165,33 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     tab3->setLayout(new QGridLayout());
     tab3->layout()->addWidget(g2);
 
+    coordLables.clear();
+    coordLables.append("PC1");
+    coordLables.append("PC2");
+
     QWidget * tab4 = AdditionalWidgets.at(3);
     tab4->setObjectName("P1");
     Graphic2D * g3 = new Graphic2D(tab4);
     //g3->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    coordLables.clear();
+    /*coordLables.clear();
     coordLables.append(headerList.at(parametersList->at(0).toInt()));
-    coordLables.append(headerList.at(parametersList->at(1).toInt()));
+    coordLables.append(headerList.at(parametersList->at(1).toInt()));*/
     g3->SetCoordsData(coords, coordLables);
     g3->SetPoints(getPmatrix1());
     tab4->setLayout(new QGridLayout());
     tab4->layout()->addWidget(g3);
 
+    coordLables.clear();
+    coordLables.append("PC3");
+    coordLables.append("PC4");
+
     QWidget * tab5 = AdditionalWidgets.at(4);
     tab5->setObjectName("P2");
     Graphic2D * g4 = new Graphic2D(tab5);
     //g4->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    coordLables.clear();
+    /*coordLables.clear();
     coordLables.append(headerList.at(parametersList->at(2).toInt()));
-    coordLables.append(headerList.at(parametersList->at(3).toInt()));
+    coordLables.append(headerList.at(parametersList->at(3).toInt()));*/
     g4->SetCoordsData(coords, coordLables);
     g4->SetPoints(getPmatrix2());
     tab5->setLayout(new QGridLayout());
@@ -245,7 +259,7 @@ QList<Point3DEx> ComponentAnalyzer::getTmatrix1() {
         Point3DEx p;
         p.x = TMatrix[i][0];
         p.y = TMatrix[i][1];
-        p.label = QString::number(i);
+        p.label = QString::number(i+1);
         p.color = Figure3D::red;
         result.append(p);
     }
@@ -258,7 +272,7 @@ QList<Point3DEx> ComponentAnalyzer::getTmatrix2() {
         Point3DEx p;
         p.x = TMatrix[i][2];
         p.y = TMatrix[i][3];
-        p.label = QString::number(i);
+        p.label = QString::number(i+1);
         p.color = Figure3D::red;
         result.append(p);
     }

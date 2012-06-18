@@ -51,7 +51,7 @@ QHash<QString,QString> ElacticMapAnalyzer::getAllParams() {
 bool ElacticMapAnalyzer::showDialog() {
     fillInputTableData();
     StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
-
+    dialog->SetDialogName(name);
     dialog->addAdditionalParam(new QSpinBox(), tr("Количество итераций"));
     dialog->addAdditionalParam(new QSpinBox(), tr("P"));
     dialog->addAdditionalParam(new QSpinBox(), tr("Q"));
@@ -143,6 +143,9 @@ void ElacticMapAnalyzer::printResults(QTableWidget * table) {
     coords.y = 5.0f;
     coords.z = 5.0f;
     QList<QString> coordLables;
+    coordLables.append("PC1");
+    coordLables.append("PC2");
+    coordLables.append("PC3");
 
     QWidget * tab1 = AdditionalWidgets.at(0);
     tab1->setObjectName("График");
@@ -177,7 +180,7 @@ QList<Point3DEx> ElacticMapAnalyzer::getTmatrix() {
         p.x = TMatrix[i][0];
         p.y = TMatrix[i][1];
         p.z = TMatrix[i][2];
-        p.label = QString::number(i);
+        p.label = QString::number(i+1);
         p.color = Figure3D::red;
         result.append(p);
     }
@@ -356,7 +359,7 @@ bool ElacticMapAnalyzer::compareTaxonsCount() {
 void ElacticMapAnalyzer::findNewTaxons() {
     prevTaxonsCountHistory.append(taxonsCount);
     taxonsCount.clear();
-    //taxons.clear();
+    taxons.clear();
 
     QList<QList<double> > triangle = findTriangleAMatrix();
 
@@ -379,9 +382,7 @@ void ElacticMapAnalyzer::findNewTaxons() {
         p.y /= triangle[row][row];
         p.z /= triangle[row][row];
 
-        taxons[row].x += p.x;
-        taxons[row].y += p.y;
-        taxons[row].z += p.z;
+        taxons[row] = p;
     }
 
     taxonsCount = getTaxonsCount();

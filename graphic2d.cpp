@@ -12,6 +12,10 @@ Graphic2D::~Graphic2D()
 }
 
 void Graphic2D::drawGraphic() {
+    drawPoints();
+}
+
+void Graphic2D::drawPoints() {
     SnowFlake3D flake;
     QFont* font = new QFont("Times", 14, QFont::Normal);
     foreach (Point3DEx p, points) {

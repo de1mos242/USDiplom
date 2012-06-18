@@ -16,6 +16,7 @@ public:
     virtual void printResults(QTableWidget *);
     QList <QString> *parametersList;
     void fillInputTableData();
+    QString name;
 
 
 signals:

@@ -22,6 +22,7 @@ public:
     int GetIntParam(QString name);
     double GetDoubleParam(QString name);
     QString GetStringParam(QString name);
+    void SetDialogName(QString name);
 
 public slots:
     void addParam();

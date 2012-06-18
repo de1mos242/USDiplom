@@ -12,6 +12,7 @@
 #include "spearmananalizer.h"
 #include <QTextStream>
 #include "elacticmapanalyzer.h"
+#include "pairregressionanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -60,6 +61,10 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         analyzer = new ElacticMapAnalyzer();
         analyzer->AdditionalWidgets.append(new QWidget());
     }
+    else if (action == "PairRegressionAnalyze") {
+        analyzer = new PairRegressionAnalyzer();
+        analyzer->AdditionalWidgets.append(new QWidget());
+    }
     else {
         QMessageBox msgBox;
         msgBox.setInformativeText(menuAction->text() + " еще не реализован");
@@ -67,7 +72,7 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
         msgBox.exec();
         return;
     }
-
+    analyzer->name = menuAction->text();
     QWidget *newTab = new QWidget();
     QTableWidget *table = new QTableWidget(newTab);
     table->setEditTriggers(QTableWidget::NoEditTriggers);

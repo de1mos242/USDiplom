@@ -90,3 +90,7 @@ QString StatisticAnalyzeDialog::GetStringParam(QString name) {
     QTextEdit* w = (QTextEdit*)additionalWidgets.value(name);
     return w->toPlainText();
 }
+
+void StatisticAnalyzeDialog::SetDialogName(QString name) {
+    setWindowTitle(name);
+}

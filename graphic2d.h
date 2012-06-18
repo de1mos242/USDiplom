@@ -11,6 +11,7 @@ public:
 
 protected:
     virtual void drawGraphic();
+    virtual void drawPoints();
 
 private:
     QList<Point3DEx> points;
