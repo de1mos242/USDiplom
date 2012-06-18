@@ -9,6 +9,7 @@ public:
     ~PairRegressionAnalyzerGraphic();
     void SetLinePoints(QList<Point3D> points);
     void SetErrorText(QString error);
+    void SetEquation(QString qu);
 
 protected:
     virtual void drawGraphic();
@@ -19,6 +20,7 @@ private:
     void drawError();
     QList<Point3D> linePoints;
     QString error;
+    QString equation;
 };
 
 #endif // PAIRREGRESSIONANALYZERGRAPHIC_H

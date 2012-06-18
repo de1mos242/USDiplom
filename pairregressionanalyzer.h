@@ -22,6 +22,8 @@ private:
 
     QList<Point3DEx> getYPoints();
     QList<Point3D> getY2Points();
+
+    double A, B;
 };
 
 #endif // PAIRREGRESSIONANALYZER_H

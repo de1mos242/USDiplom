@@ -71,7 +71,7 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     }
     else {
         QMessageBox msgBox;
-        msgBox.setInformativeText(menuAction->text() + " еще не реализован");
+        msgBox.setInformativeText(menuAction->text() + tr(" еще не реализован"));
         msgBox.setWindowTitle("Menu say's:");
         msgBox.exec();
         return;

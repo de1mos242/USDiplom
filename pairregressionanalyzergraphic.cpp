@@ -37,4 +37,9 @@ void PairRegressionAnalyzerGraphic::drawLine() {
 void PairRegressionAnalyzerGraphic::drawError() {
     QFont* font = new QFont("Times", 14, QFont::Normal);
     renderText(-coords.x, coords.y*0.75, 0.0, error, *font);
+    renderText(-coords.x, coords.y*0.5, 0.0, equation, *font);
+}
+
+void PairRegressionAnalyzerGraphic::SetEquation(QString qu) {
+    this->equation = qu;
 }

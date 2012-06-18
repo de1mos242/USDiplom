@@ -21,6 +21,8 @@ void PairRegressionAnalyzer::DoAnalyze() {
     }
     double b = bUp/bDown;
     double a = yAvg - b * xAvg;
+    this->A = a;
+    this->B = b;
 
     QList<double> y2List;
     for (int i=0;i<xList.size();i++) {
@@ -73,6 +75,7 @@ void PairRegressionAnalyzer::printResults(QTableWidget * table) {
     g1->SetPoints(getYPoints());
     g1->SetLinePoints(getY2Points());
     g1->SetErrorText("Качество оценивания: " + QString::number(R));
+    g1->SetEquation("y'' = " + QString::number(A) + " + " + QString::number(B) + "x");
     tab1->setLayout(new QGridLayout());
     tab1->layout()->addWidget(g1);
 }
