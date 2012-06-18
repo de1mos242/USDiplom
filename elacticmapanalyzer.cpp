@@ -304,7 +304,7 @@ QList<Point3D> ElacticMapAnalyzer::findTaxonPoints(int idx) {
         pointInTaxon.insert(i, 0);
     for (int i=0;i<inputPoints.size();i++) {
         int nearest = 0;
-        double minLen = 1005000.0;
+        double minLen = Vector::Create(inputPoints[i], taxons[0]).length();
         for (int j=1;j<taxons.size();j++) {
             Vector v = Vector::Create(inputPoints[i], taxons[j]);
             double len = v.length();

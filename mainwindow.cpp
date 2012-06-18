@@ -14,6 +14,7 @@
 #include "elacticmapanalyzer.h"
 #include "pairregressionanalyzer.h"
 #include "linearregressionanalyzer.h"
+#include "clusteranalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -68,6 +69,9 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     }
     else if (action == "LinearRegressionAnalyze") {
         analyzer = new LinearRegressionAnalyzer();
+    }
+    else if (action == "ClusterAnalyze") {
+        analyzer = new ClusterAnalyzer();
     }
     else {
         QMessageBox msgBox;

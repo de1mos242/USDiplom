@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     graphic3d.cpp \
     pairregressionanalyzer.cpp \
     pairregressionanalyzergraphic.cpp \
-    linearregressionanalyzer.cpp
+    linearregressionanalyzer.cpp \
+    clusteranalyzer.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -53,7 +54,8 @@ HEADERS  += mainwindow.h \
     graphic3d.h \
     pairregressionanalyzer.h \
     pairregressionanalyzergraphic.h \
-    linearregressionanalyzer.h
+    linearregressionanalyzer.h \
+    clusteranalyzer.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui
