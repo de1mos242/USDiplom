@@ -356,7 +356,7 @@ bool ElacticMapAnalyzer::compareTaxonsCount() {
 void ElacticMapAnalyzer::findNewTaxons() {
     prevTaxonsCountHistory.append(taxonsCount);
     taxonsCount.clear();
-    taxons.clear();
+    //taxons.clear();
 
     QList<QList<double> > triangle = findTriangleAMatrix();
 
@@ -379,7 +379,9 @@ void ElacticMapAnalyzer::findNewTaxons() {
         p.y /= triangle[row][row];
         p.z /= triangle[row][row];
 
-        taxons[row] = p;
+        taxons[row].x += p.x;
+        taxons[row].y += p.y;
+        taxons[row].z += p.z;
     }
 
     taxonsCount = getTaxonsCount();
