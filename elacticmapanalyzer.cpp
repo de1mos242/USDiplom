@@ -52,7 +52,7 @@ bool ElacticMapAnalyzer::showDialog() {
     fillInputTableData();
     StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
     dialog->SetDialogName(name);
-    dialog->addAdditionalParam(new QSpinBox(), tr("Количество итераций"));
+    dialog->addAdditionalParam(new QSpinBox(), "Количество итераций");
     dialog->addAdditionalParam(new QSpinBox(), tr("P"));
     dialog->addAdditionalParam(new QSpinBox(), tr("Q"));
     QDoubleSpinBox* muSP = new QDoubleSpinBox();
@@ -75,7 +75,7 @@ bool ElacticMapAnalyzer::showDialog() {
     p = dialog->GetIntParam("P");
     q = dialog->GetIntParam("Q");
     pq = p*q;
-    iterations = dialog->GetIntParam(tr("Количество итераций"));
+    iterations = dialog->GetIntParam("Количество итераций");
     lambda = dialog->GetDoubleParam("Lambda");
     mu = dialog->GetDoubleParam("Mu");
     return true;
@@ -105,7 +105,7 @@ void ElacticMapAnalyzer::DoAnalyze() {
 }
 
 void ElacticMapAnalyzer::printResults(QTableWidget * table) {
-    table->setObjectName(" Таксоны");
+    table->setObjectName(tr(" Таксоны"));
     table->setEditTriggers(QTableWidget::NoEditTriggers);
 
     table->setColumnCount(AMatrix[0].size());
@@ -148,7 +148,7 @@ void ElacticMapAnalyzer::printResults(QTableWidget * table) {
     coordLables.append("PC3");
 
     QWidget * tab1 = AdditionalWidgets.at(0);
-    tab1->setObjectName("График");
+    tab1->setObjectName(tr("График"));
     Graphic3d * g1 = new Graphic3d(tab1);
     //g1->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     coordLables.append(headerList.at(parametersList->at(0).toInt()));

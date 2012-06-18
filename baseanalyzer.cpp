@@ -156,3 +156,32 @@ double BaseAnalyzer::maxElement(QList<double> list) {
             max = list.at(i);
     return (max);
 }
+
+double BaseAnalyzer::sumElements(QList<double> list) {
+    double temp = 0.0;
+    for (int i=0;i<list.size();i++)
+        temp += list[i];
+    return temp;
+}
+
+double BaseAnalyzer::sumListsElements(QList<double> list1, QList<double> list2) {
+    double temp = 0.0;
+    for (int i=0;i<list1.size(); i++)
+        temp += list1[i]*list2[i];
+    return temp;
+}
+
+QList<QList<double> > BaseAnalyzer::createNullMatrix(int n) {
+    QList<QList<double > > result;
+    for (int i=0;i<n;i++) {
+        result.append(createNullList(n));
+    }
+    return result;
+}
+
+QList<double> BaseAnalyzer::createNullList(int n) {
+    QList<double> result;
+    for (int i=0;i<n;i++)
+        result.append(0.0);
+    return result;
+}

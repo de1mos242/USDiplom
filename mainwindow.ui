@@ -147,7 +147,7 @@
   </action>
   <action name="LinearRegressionAnalyze">
    <property name="text">
-    <string>Линейная регрессия</string>
+    <string>Множественная линейная регрессия</string>
    </property>
   </action>
  </widget>

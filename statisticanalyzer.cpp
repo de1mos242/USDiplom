@@ -203,16 +203,16 @@ void StatisticAnalyzer::printResults(QTableWidget *table) {
 
 QHash<QString, QString> StatisticAnalyzer::getAllParams() {
     QHash<QString,QString> params; // = new QHash<QString,QString>();
-    params.insert("Average","Среднее по данному параметру");
-    params.insert("Variance","Дисперсия");
-    params.insert("Max","Максимум");
-    params.insert("Min","Минимум");
-    params.insert("StandardDeviation","Стандартное отклонение");
-    params.insert("Median","Медиана");
-    params.insert("Quartile25","Квартиль 25%");
-    params.insert("Quartile75","Квартиль 75%");
-    params.insert("Mode","Мода");
-    params.insert("Asymmetry","Ассиметрия");
-    params.insert("Excess","Эксцесс");
+    params.insert("Average",tr("Среднее по данному параметру"));
+    params.insert("Variance",tr("Дисперсия"));
+    params.insert("Max",tr("Максимум"));
+    params.insert("Min",tr("Минимум"));
+    params.insert("StandardDeviation",tr("Стандартное отклонение"));
+    params.insert("Median",tr("Медиана"));
+    params.insert("Quartile25",tr("Квартиль 25%"));
+    params.insert("Quartile75",tr("Квартиль 75%"));
+    params.insert("Mode",tr("Мода"));
+    params.insert("Asymmetry",tr("Ассиметрия"));
+    params.insert("Excess",tr("Эксцесс"));
     return params;
 }

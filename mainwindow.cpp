@@ -13,6 +13,7 @@
 #include <QTextStream>
 #include "elacticmapanalyzer.h"
 #include "pairregressionanalyzer.h"
+#include "linearregressionanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -64,6 +65,9 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     else if (action == "PairRegressionAnalyze") {
         analyzer = new PairRegressionAnalyzer();
         analyzer->AdditionalWidgets.append(new QWidget());
+    }
+    else if (action == "LinearRegressionAnalyze") {
+        analyzer = new LinearRegressionAnalyzer();
     }
     else {
         QMessageBox msgBox;

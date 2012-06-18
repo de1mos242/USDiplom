@@ -40,6 +40,10 @@ protected:
     double average(QList<double>);
     double variance(QList<double>);
     double standardDeviation(QList<double>);
+    double sumElements(QList<double> list);
+    double sumListsElements(QList<double> list1, QList<double> list2);
+    QList<QList<double> > createNullMatrix(int n);
+    QList<double> createNullList(int n);
 
 private:
     void fillHeaderList();

@@ -72,7 +72,7 @@ void PairRegressionAnalyzer::printResults(QTableWidget * table) {
     g1->SetCoordsData(coords, coordLables,Figure3D::black, Figure3D::darkGreen, &coordsScale);
     g1->SetPoints(getYPoints());
     g1->SetLinePoints(getY2Points());
-    g1->SetErrorText(tr("Относительная погрешность: ") + QString::number(R));
+    g1->SetErrorText("Качество оценивания: " + QString::number(R));
     tab1->setLayout(new QGridLayout());
     tab1->layout()->addWidget(g1);
 }

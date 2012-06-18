@@ -99,7 +99,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     int parametersCount = parametersList->count();
     table->setColumnCount(parametersCount);
     table->setRowCount(parametersCount);
-    table->setObjectName(" P Матрица");
+    table->setObjectName(tr(" P Матрица"));
     for (int i=0;i<parametersCount;i++) {
         table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
         table->setVerticalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
@@ -111,7 +111,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
 
 
     QWidget* tab = AdditionalWidgets.at(0);
-    tab->setObjectName("T Матрица");
+    tab->setObjectName(tr("T Матрица"));
     QTableWidget* Ttable = new QTableWidget();
     Ttable->setEditTriggers(QTableWidget::NoEditTriggers);
 
