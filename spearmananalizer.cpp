@@ -136,12 +136,3 @@ void SpearmanAnalizer::fillInputData() {
         matrix.append(colList);
     }
 }
-
-QHash<QString,QString> SpearmanAnalizer::getAllParams() {
-    QHash<QString,QString> result;
-    for (int i=0;i<columnsCount;i++) {
-        QString headerItemText = headerList.at(i);
-        result.insert(QString::number(i), headerItemText);
-    }
-    return result;
-}

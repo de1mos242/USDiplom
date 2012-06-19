@@ -13,7 +13,6 @@ public:
 
 protected:
     virtual void fillInputData();
-    virtual QHash<QString,QString> getAllParams();
 
 private:
     int p,q, pq;

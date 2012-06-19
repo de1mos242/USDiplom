@@ -39,15 +39,6 @@ void ElacticMapAnalyzer::fillInputData() {
     }
 }
 
-QHash<QString,QString> ElacticMapAnalyzer::getAllParams() {
-    QHash<QString,QString> result;
-    for (int i=0;i<columnsCount;i++) {
-        QString headerItemText = headerList.at(i);
-        result.insert(QString::number(i), headerItemText);
-    }
-    return result;
-}
-
 bool ElacticMapAnalyzer::showDialog() {
     fillInputTableData();
     StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();

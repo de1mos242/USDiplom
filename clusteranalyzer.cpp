@@ -167,21 +167,4 @@ void ClusterAnalyzer::fillInputData() {
     }
 
     matrix = tempMatrix;
-
-    /*for(int col=0;col<tempMatrix.at(0).count();col++) {
-        QList<double> colList;
-        for (int row=0;row<tempMatrix.count();row++) {
-            colList.append(tempMatrix.at(row).at(col));
-        }
-        matrix.append(colList);
-    }*/
-}
-
-QHash<QString,QString> ClusterAnalyzer::getAllParams() {
-    QHash<QString,QString> result;
-    for (int i=0;i<columnsCount;i++) {
-        QString headerItemText = headerList.at(i);
-        result.insert(QString::number(i), headerItemText);
-    }
-    return result;
 }

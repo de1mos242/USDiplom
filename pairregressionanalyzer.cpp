@@ -109,15 +109,6 @@ void PairRegressionAnalyzer::fillInputData() {
     }
 }
 
-QHash<QString,QString> PairRegressionAnalyzer::getAllParams() {
-    QHash<QString,QString> result;
-    for (int i=0;i<columnsCount;i++) {
-        QString headerItemText = headerList.at(i);
-        result.insert(QString::number(i), headerItemText);
-    }
-    return result;
-}
-
 QList<Point3DEx> PairRegressionAnalyzer::getYPoints() {
     double xScale = 5.0/maxElement(results[0]);
     double yScale = 5.0/maxElement(results[1]);

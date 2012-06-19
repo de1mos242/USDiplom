@@ -12,7 +12,6 @@ public:
     virtual bool showDialog();
 
 protected:
-    virtual QHash<QString,QString> getAllParams();
     virtual void fillInputData();
 
 private:

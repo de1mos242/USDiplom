@@ -10,7 +10,6 @@ public:
     virtual void printResults(QTableWidget *);
 
 protected:
-    virtual QHash<QString,QString> getAllParams();
     virtual void fillInputData();
 
 private:
