@@ -36,7 +36,7 @@ void LinearRegressionAnalyzer::DoAnalyze() {
     for (int i=0;i<xNMatrix.size();i++) {
         temp = 0.0;
         for (int j=0;j<xNMatrix[i].size();j++) {
-            temp += yList[i] * xNMatrix[i][j];
+            temp += yList[j] * xNMatrix[i][j];
         }
         bMatrix.append(temp);
     }
