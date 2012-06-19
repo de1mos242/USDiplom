@@ -4,8 +4,8 @@
 
 int main(int argc, char *argv[])
 {
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("ANSI"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("Windows-1251"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("Windows-1251"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("Windows-1251"));
 
     QApplication a(argc, argv);
