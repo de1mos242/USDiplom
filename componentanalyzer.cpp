@@ -101,7 +101,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     table->setRowCount(parametersCount);
     table->setObjectName(tr(" P Матрица"));
     for (int i=0;i<parametersCount;i++) {
-        table->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
+        table->setHorizontalHeaderItem(i,new QTableWidgetItem("PC"+QString::number(i+1)));
         table->setVerticalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
     }
 
@@ -119,7 +119,7 @@ void ComponentAnalyzer::printResults(QTableWidget * table) {
     Ttable->setRowCount(TMatrix.count());
 
     for (int i=0;i<parametersCount;i++) {
-        Ttable->setHorizontalHeaderItem(i,new QTableWidgetItem(headerList.at(parametersList->at(i).toInt())));
+        Ttable->setHorizontalHeaderItem(i,new QTableWidgetItem("PC"+QString::number(i+1)));
     }
 
     for(int i=0;i<TMatrix.count();i++)
