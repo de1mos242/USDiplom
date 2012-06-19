@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>true</bool>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="OpenFile"/>
+    <addaction name="separator"/>
+    <addaction name="SaveAs"/>
+    <addaction name="Exit"/>
+   </widget>
+   <widget class="QMenu" name="menuANALIS">
+    <property name="title">
+     <string>Методы анализа</string>
+    </property>
+    <widget class="QMenu" name="menu_2">
+     <property name="title">
+      <string>Корреляционный анализ</string>
+     </property>
+     <addaction name="LinearAnalyze"/>
+     <addaction name="SpearmanAnalyze"/>
+     <addaction name="KendellAnalyze"/>
+    </widget>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>Регрессионный анализ</string>
+     </property>
+     <addaction name="PairRegressionAnalyze"/>
+     <addaction name="LinearRegressionAnalyze"/>
+    </widget>
+    <addaction name="StatisticAnalyze"/>
+    <addaction name="menu_2"/>
+    <addaction name="menu_3"/>
+    <addaction name="ClusterAnalyze"/>
+    <addaction name="ComponentAnalyze"/>
+    <addaction name="ElasticMapAnalyze"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuANALIS"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <action name="OpenFile">
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+  </action>
+  <action name="SaveAs">
+   <property name="text">
+    <string>Сохранить как...</string>
+   </property>
+  </action>
+  <action name="Exit">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
+  <action name="StatisticAnalyze">
+   <property name="text">
+    <string>Описательные статистики</string>
+   </property>
+  </action>
+  <action name="FrequencyAnalyze">
+   <property name="text">
+    <string>Частотный анализ</string>
+   </property>
+  </action>
+  <action name="ClusterAnalyze">
+   <property name="text">
+    <string>Кластерный анализ(K-means)</string>
+   </property>
+  </action>
+  <action name="ComponentAnalyze">
+   <property name="text">
+    <string>Компонентный анализ (метод главных компонент)</string>
+   </property>
+  </action>
+  <action name="ElasticMapAnalyze">
+   <property name="text">
+    <string>Упругие карты</string>
+   </property>
+  </action>
+  <action name="LinearAnalyze">
+   <property name="text">
+    <string>Линейный</string>
+   </property>
+  </action>
+  <action name="SpearmanAnalyze">
+   <property name="text">
+    <string>Спирмена</string>
+   </property>
+  </action>
+  <action name="KendellAnalyze">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Кендалла</string>
+   </property>
+  </action>
+  <action name="PairRegressionAnalyze">
+   <property name="text">
+    <string>Парная регрессия</string>
+   </property>
+  </action>
+  <action name="LinearRegressionAnalyze">
+   <property name="text">
+    <string>Множественная линейная регрессия</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>menuBar</sender>
+   <signal>triggered(QAction*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>MenuAction(QAction*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>11</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>151</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ChangeTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>638</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>tabCloseRequested(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>OnCloseTab(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>263</x>
+     <y>106</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>MenuAction(QAction*)</slot>
+  <slot>ChangeTab(int)</slot>
+  <slot>OnCloseTab(int)</slot>
+ </slots>
+</ui>

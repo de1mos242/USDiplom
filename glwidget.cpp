@@ -7,8 +7,6 @@
 #include "glwidget.h"
 #include "snowflake3d.h"
 #include "line3d.h"
-#include "cylinder3d.h"
-#include "sphere3d.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE  0x809D

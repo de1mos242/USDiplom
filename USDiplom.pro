@@ -23,8 +23,6 @@ SOURCES += main.cpp\
     figure3d.cpp \
     line3d.cpp \
     snowflake3d.cpp \
-    cylinder3d.cpp \
-    sphere3d.cpp \
     vector.cpp \
     graphic2d.cpp \
     elacticmapanalyzer.cpp \
@@ -46,8 +44,6 @@ HEADERS  += mainwindow.h \
     figure3d.h \
     line3d.h \
     snowflake3d.h \
-    cylinder3d.h \
-    sphere3d.h \
     vector.h \
     graphic2d.h \
     elacticmapanalyzer.h \
