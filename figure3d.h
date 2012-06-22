@@ -3,24 +3,33 @@
 
 #include <QtOpenGL>
 
+struct FigureColor {
+    float r,g,b;
+};
+
 
 class Figure3D
 {
 public:
     Figure3D();
 
+
     enum GColor {
-        black, white, red, green, blue, yellow,darkGreen
+        black, white, red, green, blue, yellow,darkGreen,fromRGB
     };
 
     virtual void draw();
     void SetCurrentColor(GColor);
+    void SetCurrentColor(FigureColor color);
+    void SetCurrentColor(float r, float g, float b);
     static void SetNewColor(GColor);
+    static void SetNewColor(float r, float g, float b);
 
 protected:
-    static void setColor(GColor);
+    static void setColor(FigureColor c);
 
-    GColor currentColor;
+    FigureColor currentColor;
+    static FigureColor colorFromGColor(GColor c);
 };
 
 struct Point3D {

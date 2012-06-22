@@ -15,6 +15,7 @@
 #include "pairregressionanalyzer.h"
 #include "linearregressionanalyzer.h"
 #include "clusteranalyzer.h"
+#include "adaptivegroupanalyzer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,6 +73,10 @@ void MainWindow::AnalyzeAction(QAction* menuAction) {
     }
     else if (action == "ClusterAnalyze") {
         analyzer = new ClusterAnalyzer();
+    }
+    else if (action == "AdaptiveSystemsAnalyze") {
+        analyzer = new AdaptiveGroupAnalyzer();
+        analyzer->AdditionalWidgets.append(new QWidget());
     }
     else {
         QMessageBox msgBox;

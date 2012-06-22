@@ -23,6 +23,7 @@ public:
     double GetDoubleParam(QString name);
     QString GetStringParam(QString name);
     void SetDialogName(QString name);
+    void HideParamsList();
 
 public slots:
     void addParam();
@@ -35,6 +36,7 @@ private:
     void moveParam(QListWidget *from, QListWidget *to, QListWidgetItem *what, bool needSort);
 
     QHash<QString,QWidget*> additionalWidgets;
+    bool noParams;
 };
 
 #endif // STATISTICANALYZEDIALOG_H

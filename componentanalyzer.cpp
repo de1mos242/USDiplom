@@ -74,7 +74,7 @@ void ComponentAnalyzer::DoAnalyze() {
                 checkE += (Tknew[i][0]-Tkm[i][0])*(Tknew[i][0]-Tkm[i][0]);
             checkE = sqrt(checkE);
 
-            if (checkE < e1) {
+            if (checkE < e1 /*|| checkE != checkE*/ ) {
                 exit = false;
             }
             else {
@@ -89,7 +89,7 @@ void ComponentAnalyzer::DoAnalyze() {
                 workMatrix[i][j] = workMatrix[i][j] - minus[i][j];
 
         for (int i=0;i<TMatrix.count();i++)
-            TMatrix[i][componentIndex] = Tknew[i][0];
+            TMatrix[i][componentIndex] = Tkm[i][0];
         for (int i=0;i<PMatrix.count();i++)
             PMatrix[i][componentIndex] = Pkm[i][0];
     }

@@ -11,6 +11,7 @@ StatisticAnalyzeDialog::StatisticAnalyzeDialog(QWidget *parent) :
     ui(new Ui::StatisticAnalyzeDialog)
 {
     ui->setupUi(this);
+    noParams = false;
 }
 
 StatisticAnalyzeDialog::~StatisticAnalyzeDialog()
@@ -47,14 +48,16 @@ void StatisticAnalyzeDialog::addParam() {
 
 void StatisticAnalyzeDialog::run() {
     ParametersList = new QList <QString>();
-    for (int i=0;i<ui->selectedParams->count();i++) {
-        ParametersList->append(ui->selectedParams->item(i)->data(Qt::UserRole).toString());
-    }
-    if (ParametersList->count() == 0) {
-        QMessageBox *msg = new QMessageBox(this);
-        msg->setText("Выберите параметры");
-        msg->exec();
-        return;
+    if (!noParams) {
+        for (int i=0;i<ui->selectedParams->count();i++) {
+            ParametersList->append(ui->selectedParams->item(i)->data(Qt::UserRole).toString());
+        }
+        if (ParametersList->count() == 0) {
+            QMessageBox *msg = new QMessageBox(this);
+            msg->setText("Выберите параметры");
+            msg->exec();
+            return;
+        }
     }
     this->close();
 }
@@ -71,7 +74,7 @@ void StatisticAnalyzeDialog::addAdditionalParam(QWidget *widget, QString name) {
     label->setText(name);
     box->layout()->addWidget(label);
     box->layout()->addWidget(widget);
-    ui->vLayout->layout()->addWidget(box);
+    ui->commonLayout->layout()->addWidget(box);
 
     additionalWidgets.insert(name, widget);
 }
@@ -93,4 +96,28 @@ QString StatisticAnalyzeDialog::GetStringParam(QString name) {
 
 void StatisticAnalyzeDialog::SetDialogName(QString name) {
     setWindowTitle(name);
+}
+
+void StatisticAnalyzeDialog::HideParamsList() {
+    QLayoutItem* item;
+    while ( ( item = ui->addDeleteButtonLayout->takeAt(0)) != NULL)
+    {
+        delete item->widget();
+        delete item;
+    }
+    delete ui->addDeleteButtonLayout;
+    while ( ( item = ui->paramsLayout->takeAt( 0 ) ) != NULL )
+    {
+        delete item->widget();
+        delete item;
+    }
+    delete ui->paramsLayout;
+
+    /*ui->paramsLayout->removeWidget(ui->aviabledParams);
+    ui->paramsLayout->removeWidget(ui->selectedParams);
+    ui->paramsLayout->removeWidget(ui->addButton);
+    ui->paramsLayout->removeWidget(ui->deleteButton);
+    ui->paramsLayout->removeWidget(ui->addDeleteButtonLayout->widget());
+    ui->commonLayout->removeWidget(ui->paramsLayout->widget());*/
+    noParams = true;
 }

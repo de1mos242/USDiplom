@@ -30,7 +30,9 @@ SOURCES += main.cpp\
     pairregressionanalyzer.cpp \
     pairregressionanalyzergraphic.cpp \
     linearregressionanalyzer.cpp \
-    clusteranalyzer.cpp
+    clusteranalyzer.cpp \
+    adaptivegroupanalyzer.cpp \
+    adaptivegroupanalyzegraphic.cpp
 
 HEADERS  += mainwindow.h \
     baseanalyzer.h \
@@ -51,7 +53,9 @@ HEADERS  += mainwindow.h \
     pairregressionanalyzer.h \
     pairregressionanalyzergraphic.h \
     linearregressionanalyzer.h \
-    clusteranalyzer.h
+    clusteranalyzer.h \
+    adaptivegroupanalyzer.h \
+    adaptivegroupanalyzegraphic.h
 
 FORMS    += mainwindow.ui \
     statisticanalyzedialog.ui

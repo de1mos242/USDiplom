@@ -42,11 +42,16 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent *event);
     virtual void drawGraphic();
+    virtual void drawCoords();
 
 
-
+    Point3D coordsScale;
     Point3D coords;
     int dimentions;
+
+    QList<QString> coordsLabels;
+    Figure3D::GColor coordsLabelsColor;
+    Figure3D::GColor coordsColor;
 
 private:
      int xRot;
@@ -54,16 +59,12 @@ private:
      int zRot;
      double scale;
      QPoint lastPos;
-     Point3D coordsScale;
 
      bool showGraphic;
      bool showCoords;
 
-     QList<QString> coordsLabels;
-     Figure3D::GColor coordsLabelsColor;
-     Figure3D::GColor coordsColor;
 
-     void drawCoords();
+
 };
 
 

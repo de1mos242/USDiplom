@@ -13,6 +13,7 @@ public:
     virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
     QList<QList<double> > TMatrix;
+    QList<QList<double> > PMatrix;
 
 
 protected:
@@ -25,7 +26,6 @@ private:
     double e1;
     double e2;
 
-    QList<QList<double> > PMatrix;
 
     void normalize();
 
