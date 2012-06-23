@@ -6,6 +6,7 @@ class LinearRegressionAnalyzer : public BaseAnalyzer
 {
 public:
     LinearRegressionAnalyzer();
+    virtual bool showDialog();
     virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
 

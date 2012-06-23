@@ -1,8 +1,39 @@
 #include "pairregressionanalyzer.h"
 #include "pairregressionanalyzergraphic.h"
+#include "statisticanalyzedialog.h"
 
 PairRegressionAnalyzer::PairRegressionAnalyzer()
 {
+}
+
+bool PairRegressionAnalyzer::showDialog() {
+    fillInputTableData();
+    StatisticAnalyzeDialog *dialog = new StatisticAnalyzeDialog();
+    dialog->SetDialogName("Выберите зависимую переменную:");
+    QHashIterator<QString,QString> iterator(this->getAllParams());
+    while (iterator.hasNext()) {
+        iterator.next();
+        dialog->addAviabledParam(iterator.value(), iterator.key());
+    }
+    dialog->exec();
+    if (dialog->ParametersList->count()==0) {
+        return false;
+    }
+    parametersList = new QList<QString>();
+    parametersList->append(dialog->ParametersList->at(0));
+    StatisticAnalyzeDialog *dialog2 = new StatisticAnalyzeDialog();
+    dialog2->SetDialogName("Выберите независимую переменную:");
+    QHashIterator<QString,QString> iterator2(this->getAllParams());
+    while (iterator2.hasNext()) {
+        iterator2.next();
+        dialog2->addAviabledParam(iterator2.value(), iterator2.key());
+    }
+    dialog2->exec();
+    if (dialog2->ParametersList->count()==0) {
+        return false;
+    }
+    parametersList->append(*dialog2->ParametersList);
+    return true;
 }
 
 void PairRegressionAnalyzer::DoAnalyze() {

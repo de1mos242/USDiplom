@@ -7,6 +7,7 @@ class PairRegressionAnalyzer : public BaseAnalyzer
 {
 public:
     PairRegressionAnalyzer();
+    virtual bool showDialog();
     virtual void DoAnalyze();
     virtual void printResults(QTableWidget *);
 
